@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Instructions</key>
+	<dict>
+		<key>Text</key>
+		<string>Welcome to Bible Memory!
+
+My goal is to train you to recall the Bible at any time, whether aloud or only in your head. You can learn as much as you want, from a short phrase to an entire book of the Bible. 
+
+		      –––––––
+
+To start, you will type in a passage that you want to remember. However, to try a built-in passage first, just follow these steps:
+	
+	1) In the top-left of the screen, tap the title–in this case, "Instructions"–to show a list of passages. Then, tap a passage to show its text.
+
+	2) Next, in the top-right of the screen, tap "Learn text" to start the learning process. That's it! I will help you learn the text, one section at a time. And, when I think you might need a refresher, I will help you review!
+
+		      –––––––
+
+To learn a new passage . . . . (finish above in code first), the steps are very similar, except you first have to type in (or paste) the text. If typing seems inconvenient, consider that typing in the passage can prime your memory for learning the passage.
+	
+To create a new passage:
+
+1) In the top-left of the screen, tap the passage title to show a list of passages. Select &quot;Add a passage&quot; to create a new passage . . . .
+
+2) Next, title your passage, and type or paste in its text.
+
+3) 
+
+		      –––––––
+
+To give feedback, send email to Geoff Hom (geoffhom@gmail.com).</string>
+		<key>Brick data</key>
+		<array>
+			<integer>0</integer>
+		</array>
+	</dict>
+	<key>Philippians 1 (NIV)</key>
+	<dict>
+		<key>Text</key>
+		<string>Paul and Timothy, servants of Christ Jesus,
+
+To all the saints in Christ Jesus at Philippi, together with the overseers and deacons:
+	
+Grace and peace to you from God our Father and the Lord Jesus Christ.
+
+I thank my God every time I remember you. In all my prayers for all of you, I always pray with joy because of your partnership in the gospel from the first day until now, being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus.</string>
+		<key>Brick data</key>
+		<array>
+			<integer>0</integer>
+			<integer>43</integer>
+			<integer>132</integer>
+			<integer>204</integer>
+			<integer>247</integer>
+			<integer>376</integer>
+		</array>
+	</dict>
+	<key>Sermon on the Mount (NIV)</key>
+	<dict>
+		<key>Text</key>
+		<string>Jesus went throughout Galilee, teaching in their synagogues, preaching the good news of the kingdom, and healing every disease and sickness among the people. News about him spread all over Syria, and people brought to him all who were ill with various diseases, those suffering severe pain, the demon-possessed, those having seizures, and the paralyzed, and he healed them. Large crowds from Galilee, the Decapolis, Jerusalem, Judea and the region across the Jordan followed him.
+
+Now when he saw the crowds, he went up on a mountainside and sat down. His disciples came to him, and he began to teach them saying:
+	
+	"Blessed are the poor in spirit, for theirs is the kingdom of heaven.
+	Blessed are those who mourn, for they will be comforted."</string>
+		<key>Brick data</key>
+		<array>
+			<integer>0</integer>
+			<integer>60</integer>
+			<integer>157</integer>
+			<integer>261</integer>
+			<integer>373</integer>
+			<integer>479</integer>
+			<integer>551</integer>
+			<integer>613</integer>
+		</array>
+	</dict>
+	<key>Apostles' Creed</key>
+	<dict>
+		<key>Text</key>
+		<string>I believe in God, the Father Almighty, maker of heaven and earth.
+
+And in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, and born of the virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried. He descended into hell. On the third day He rose again from the dead. He ascended into heaven and sits at the right hand of the Father. From thence He will come to judge the living and the dead.
+
+I believe in the Holy Spirit, the holy Christian church, the communion of saints, the forgiveness of sins, the resurrection of the body, and the life everlasting. Amen.
+</string>
+		<key>Brick data</key>
+		<array>
+			<integer>0</integer>
+			<integer>65</integer>
+			<integer>111</integer>
+			<integer>178</integer>
+			<integer>245</integer>
+			<integer>315</integer>
+			<integer>381</integer>
+			<integer>440</integer>
+			<integer>523</integer>
+		</array>
+	</dict>
+</dict>
+</plist>

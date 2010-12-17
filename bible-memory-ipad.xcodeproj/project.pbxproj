@@ -1,0 +1,341 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1D3623260D0F684500981E51 /* Bible_memory_ipadAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */; };
+		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
+		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		28193055112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 28193054112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld */; };
+		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
+		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
+		9343100F129B2D6F00ADC66C /* ShowTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */; };
+		93431015129B2DBA00ADC66C /* ShowTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431013129B2DBA00ADC66C /* ShowTextViewController.m */; };
+		93431098129DC02D00ADC66C /* SegmentedControlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431097129DC02D00ADC66C /* SegmentedControlController.m */; };
+		93431104129DE5FD00ADC66C /* LearnTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431102129DE5FD00ADC66C /* LearnTextViewController.m */; };
+		93431105129DE5FD00ADC66C /* LearnTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93431103129DE5FD00ADC66C /* LearnTextViewController.xib */; };
+		936C0A1D12A855EB001622DB /* Brick.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C0A1C12A855EB001622DB /* Brick.m */; };
+		937557DF128B77F900B93E77 /* default-data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 937557DE128B77F900B93E77 /* default-data.plist */; };
+		9383CA84126E70CA00D52DE1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9383CA82126E70CA00D52DE1 /* MainViewController.m */; };
+		9383CA85126E70CA00D52DE1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9383CA83126E70CA00D52DE1 /* MainViewController.xib */; };
+		93B5176B1272B92A0028EECE /* PassagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B517691272B92A0028EECE /* PassagesTableViewController.m */; };
+		93B5176C1272B92A0028EECE /* PassagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */; };
+		93B517E212755F3C0028EECE /* Passage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B517E112755F3C0028EECE /* Passage.m */; };
+		93B5189E12762CC10028EECE /* DefaultPassages.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B5189D12762CC10028EECE /* DefaultPassages.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1D3623240D0F684500981E51 /* Bible_memory_ipadAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bible_memory_ipadAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bible_memory_ipadAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* bible-memory-ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bible-memory-ipad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		28C3AD890F43EF2300507BA6 /* bible_memory_ipad.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = bible_memory_ipad.xcdatamodel; sourceTree = "<group>"; };
+		28D801B30F44B63D00FB423F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* bible_memory_ipad_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bible_memory_ipad_Prefix.pch; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* bible_memory_ipad-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bible_memory_ipad-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ShowTextViewController.xib; path = Classes/ShowTextViewController.xib; sourceTree = "<group>"; };
+		93431012129B2DBA00ADC66C /* ShowTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowTextViewController.h; path = ../ShowTextViewController.h; sourceTree = "<group>"; };
+		93431013129B2DBA00ADC66C /* ShowTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowTextViewController.m; path = ../ShowTextViewController.m; sourceTree = "<group>"; };
+		93431096129DC02D00ADC66C /* SegmentedControlController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlController.h; sourceTree = "<group>"; };
+		93431097129DC02D00ADC66C /* SegmentedControlController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlController.m; sourceTree = "<group>"; };
+		93431101129DE5FD00ADC66C /* LearnTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearnTextViewController.h; sourceTree = "<group>"; };
+		93431102129DE5FD00ADC66C /* LearnTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearnTextViewController.m; sourceTree = "<group>"; };
+		93431103129DE5FD00ADC66C /* LearnTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LearnTextViewController.xib; path = Classes/LearnTextViewController.xib; sourceTree = "<group>"; };
+		936C0A1B12A855EB001622DB /* Brick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Brick.h; path = ../Brick.h; sourceTree = "<group>"; };
+		936C0A1C12A855EB001622DB /* Brick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Brick.m; path = ../Brick.m; sourceTree = "<group>"; };
+		937557DE128B77F900B93E77 /* default-data.plist */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = text.plist.xml; path = "default-data.plist"; sourceTree = "<group>"; tabWidth = 4; usesTabs = 1; wrapsLines = 1; };
+		9383CA81126E70CA00D52DE1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
+		9383CA82126E70CA00D52DE1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
+		9383CA83126E70CA00D52DE1 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		939CC96812A7400400EA952D /* bible_memory_ipad 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "bible_memory_ipad 2.xcdatamodel"; sourceTree = "<group>"; };
+		93B517681272B92A0028EECE /* PassagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassagesTableViewController.h; sourceTree = "<group>"; };
+		93B517691272B92A0028EECE /* PassagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassagesTableViewController.m; sourceTree = "<group>"; };
+		93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PassagesTableViewController.xib; path = Classes/PassagesTableViewController.xib; sourceTree = "<group>"; };
+		93B517E012755F3C0028EECE /* Passage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Passage.h; path = ../Passage.h; sourceTree = "<group>"; };
+		93B517E112755F3C0028EECE /* Passage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Passage.m; path = ../Passage.m; sourceTree = "<group>"; };
+		93B5189C12762CC10028EECE /* DefaultPassages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultPassages.h; sourceTree = "<group>"; };
+		93B5189D12762CC10028EECE /* DefaultPassages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultPassages.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1D60588F0D05DD3D006BFB54 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
+				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
+				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
+				28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				936C0A1B12A855EB001622DB /* Brick.h */,
+				936C0A1C12A855EB001622DB /* Brick.m */,
+				93B517E012755F3C0028EECE /* Passage.h */,
+				93B517E112755F3C0028EECE /* Passage.m */,
+				9383CA81126E70CA00D52DE1 /* MainViewController.h */,
+				9383CA82126E70CA00D52DE1 /* MainViewController.m */,
+				1D3623240D0F684500981E51 /* Bible_memory_ipadAppDelegate.h */,
+				1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */,
+				93431101129DE5FD00ADC66C /* LearnTextViewController.h */,
+				93431102129DE5FD00ADC66C /* LearnTextViewController.m */,
+				93431012129B2DBA00ADC66C /* ShowTextViewController.h */,
+				93431013129B2DBA00ADC66C /* ShowTextViewController.m */,
+				93B517681272B92A0028EECE /* PassagesTableViewController.h */,
+				93B517691272B92A0028EECE /* PassagesTableViewController.m */,
+				93B5189C12762CC10028EECE /* DefaultPassages.h */,
+				93B5189D12762CC10028EECE /* DefaultPassages.m */,
+				93431096129DC02D00ADC66C /* SegmentedControlController.h */,
+				93431097129DC02D00ADC66C /* SegmentedControlController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D6058910D05DD3D006BFB54 /* bible-memory-ipad.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = CustomTemplate;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				32CA4F630368D1EE00C91783 /* bible_memory_ipad_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */,
+				93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */,
+				93431103129DE5FD00ADC66C /* LearnTextViewController.xib */,
+				9383CA83126E70CA00D52DE1 /* MainViewController.xib */,
+				28193054112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld */,
+				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				8D1107310486CEB800E47090 /* bible_memory_ipad-Info.plist */,
+				937557DE128B77F900B93E77 /* default-data.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
+				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
+				28D801B30F44B63D00FB423F /* CoreData.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1D6058900D05DD3D006BFB54 /* bible-memory-ipad */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "bible-memory-ipad" */;
+			buildPhases = (
+				1D60588D0D05DD3D006BFB54 /* Resources */,
+				1D60588E0D05DD3D006BFB54 /* Sources */,
+				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "bible-memory-ipad";
+			productName = "bible-memory-ipad";
+			productReference = 1D6058910D05DD3D006BFB54 /* bible-memory-ipad.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "bible-memory-ipad" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1D6058900D05DD3D006BFB54 /* bible-memory-ipad */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1D60588D0D05DD3D006BFB54 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				9383CA85126E70CA00D52DE1 /* MainViewController.xib in Resources */,
+				93B5176C1272B92A0028EECE /* PassagesTableViewController.xib in Resources */,
+				937557DF128B77F900B93E77 /* default-data.plist in Resources */,
+				9343100F129B2D6F00ADC66C /* ShowTextViewController.xib in Resources */,
+				93431105129DE5FD00ADC66C /* LearnTextViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1D60588E0D05DD3D006BFB54 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				1D3623260D0F684500981E51 /* Bible_memory_ipadAppDelegate.m in Sources */,
+				28193055112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld in Sources */,
+				9383CA84126E70CA00D52DE1 /* MainViewController.m in Sources */,
+				93B5176B1272B92A0028EECE /* PassagesTableViewController.m in Sources */,
+				93B517E212755F3C0028EECE /* Passage.m in Sources */,
+				93B5189E12762CC10028EECE /* DefaultPassages.m in Sources */,
+				93431015129B2DBA00ADC66C /* ShowTextViewController.m in Sources */,
+				93431098129DC02D00ADC66C /* SegmentedControlController.m in Sources */,
+				93431104129DE5FD00ADC66C /* LearnTextViewController.m in Sources */,
+				936C0A1D12A855EB001622DB /* Brick.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1D6058940D05DD3E006BFB54 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = bible_memory_ipad_Prefix.pch;
+				INFOPLIST_FILE = "bible_memory_ipad-Info.plist";
+				PRODUCT_NAME = "bible-memory-ipad";
+			};
+			name = Debug;
+		};
+		1D6058950D05DD3E006BFB54 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = bible_memory_ipad_Prefix.pch;
+				INFOPLIST_FILE = "bible_memory_ipad-Info.plist";
+				PRODUCT_NAME = "bible-memory-ipad";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PREBINDING = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "bible-memory-ipad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D6058940D05DD3E006BFB54 /* Debug */,
+				1D6058950D05DD3E006BFB54 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "bible-memory-ipad" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		28193054112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				28C3AD890F43EF2300507BA6 /* bible_memory_ipad.xcdatamodel */,
+				939CC96812A7400400EA952D /* bible_memory_ipad 2.xcdatamodel */,
+			);
+			currentVersion = 939CC96812A7400400EA952D /* bible_memory_ipad 2.xcdatamodel */;
+			path = bible_memory_ipad.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}
