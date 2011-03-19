@@ -6,7 +6,7 @@
  Created by Geoffrey Hom on 11/24/10.
  */
 
-#import "Brick.h"
+#import "MemoryUnit.h"
 #import "LearnTextViewController.h"
 #import "Passage.h"
 #import <QuartzCore/QuartzCore.h>
@@ -58,32 +58,32 @@
 
 // The user's finished with the current set of bricks, so change them.
 - (IBAction)changeCurrentBrickRange:(id)sender {
-
-	// The pattern is brick1, brick2, bricks1-2, brick3, brick4, bricks3-4, bricks1-4, etc. So if the range is a single odd-numbered brick, then the new range is the next brick. If the range is an even-numbered brick, then the new range is the previous brick and that brick.
-	// What about edge cases? Like the last brick in the entire passage is odd, or even?
-	
-	// Well, for the first brick: store/add the brick, then show what's after.
-	// so this is still "under construction"
-	Brick *aBrick = (Brick *)[NSEntityDescription insertNewObjectForEntityForName:@"Brick" inManagedObjectContext:self.managedObjectContext];
-	
-	// End index + 1 = length.
-	aBrick.startingIndex = [NSNumber numberWithUnsignedInteger:self.currentTextShowing.length];
-	[self.currentPassage addBricksObject:aBrick];
-	
-	// show next brick
-	NSUInteger rankOfNextBrick = [self.currentPassage.rankOfCurrentStartingBrick unsignedIntegerValue] + 1;
-	self.currentPassage.rankOfCurrentStartingBrick = [NSNumber numberWithUnsignedInteger:rankOfNextBrick];
-	self.currentPassage.rankOfCurrentEndingBrick = self.currentPassage.rankOfCurrentStartingBrick;
-	
-	self.currentTextShowing = [NSMutableString stringWithString:[self.currentPassage stringFromStartOfCurrentBricks]];
-	self.passageTextView.text = self.currentTextShowing;	
-	[self enableOrDisableControls];
-	
-	// Save changes.
-	NSError *error; 
-	if (![self.managedObjectContext save:&error]) {
-		// Handle the error.
-	}
+//
+//	// The pattern is brick1, brick2, bricks1-2, brick3, brick4, bricks3-4, bricks1-4, etc. So if the range is a single odd-numbered brick, then the new range is the next brick. If the range is an even-numbered brick, then the new range is the previous brick and that brick.
+//	// What about edge cases? Like the last brick in the entire passage is odd, or even?
+//	
+//	// Well, for the first brick: store/add the brick, then show what's after.
+//	// so this is still "under construction"
+//	MemoryUnit *aBrick = (MemoryUnit *)[NSEntityDescription insertNewObjectForEntityForName:@"Brick" inManagedObjectContext:self.managedObjectContext];
+//	
+//	// End index + 1 = length.
+//	aBrick.startingIndex = [NSNumber numberWithUnsignedInteger:self.currentTextShowing.length];
+//	[self.currentPassage addBricksObject:aBrick];
+//	
+//	// show next brick
+//	NSUInteger rankOfNextBrick = [self.currentPassage.rankOfCurrentStartingBrick unsignedIntegerValue] + 1;
+//	self.currentPassage.rankOfCurrentStartingBrick = [NSNumber numberWithUnsignedInteger:rankOfNextBrick];
+//	self.currentPassage.rankOfCurrentEndingBrick = self.currentPassage.rankOfCurrentStartingBrick;
+//	
+//	self.currentTextShowing = [NSMutableString stringWithString:[self.currentPassage stringFromStartOfCurrentBricks]];
+//	self.passageTextView.text = self.currentTextShowing;	
+//	[self enableOrDisableControls];
+//	
+//	// Save changes.
+//	NSError *error; 
+//	if (![self.managedObjectContext save:&error]) {
+//		// Handle the error.
+//	}
 }
 
 // Enable or disable the section/word controls, depending on what's available.
@@ -441,8 +441,8 @@
 	self.instructions3TextView.frame = frame;
 	self.doneButton.frame = CGRectOffset(self.doneButton.frame, 0, newHeight - oldHeight);
 	
-	self.currentTextShowing = [NSMutableString stringWithString:[self.currentPassage stringFromStartOfCurrentBricks]];
-	self.passageTextView.text = self.currentTextShowing;
+//	self.currentTextShowing = [NSMutableString stringWithString:[self.currentPassage stringFromStartOfCurrentBricks]];
+//	self.passageTextView.text = self.currentTextShowing;
 	
 	[self enableOrDisableControls];
 }

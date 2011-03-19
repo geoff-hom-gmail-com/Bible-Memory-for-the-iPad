@@ -1,19 +1,15 @@
 /*
-  Project: bible-memory-ipad
-	 File: Bible_memory_ipadAppDelegate.h
- Abstract:
- 
- Created by Geoffrey Hom on 10/19/10.
+ File: Bible_memory_ipadAppDelegate.h
+ Authors: Geoffrey Hom (GeoffHom@gmail.com)
+ Abstract: The application delegate. 
  */
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@class MainViewController;
-
 @interface Bible_memory_ipadAppDelegate : NSObject <UIApplicationDelegate> {
-	MainViewController *mainViewController;
-    UIWindow *window;
+    UINavigationController *navigationController;
+	UIWindow *window;
     
 @private
     NSManagedObjectContext *managedObjectContext_;
@@ -21,7 +17,7 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator_;
 }
 
-@property (nonatomic, retain) MainViewController *mainViewController;
+@property (nonatomic, retain) UINavigationController *navigationController;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 
 @property (nonatomic, retain, readonly) NSManagedObjectContext *managedObjectContext;

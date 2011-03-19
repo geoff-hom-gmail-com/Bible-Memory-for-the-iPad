@@ -20,14 +20,18 @@
 		93431098129DC02D00ADC66C /* SegmentedControlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431097129DC02D00ADC66C /* SegmentedControlController.m */; };
 		93431104129DE5FD00ADC66C /* LearnTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431102129DE5FD00ADC66C /* LearnTextViewController.m */; };
 		93431105129DE5FD00ADC66C /* LearnTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93431103129DE5FD00ADC66C /* LearnTextViewController.xib */; };
-		936C0A1D12A855EB001622DB /* Brick.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C0A1C12A855EB001622DB /* Brick.m */; };
+		936B33B1134449BB00E40FF4 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936B33AF134449BB00E40FF4 /* RootViewController.m */; };
+		936B33B2134449BB00E40FF4 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936B33B0134449BB00E40FF4 /* RootViewController.xib */; };
+		936B34311344589200E40FF4 /* LearnPassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936B342F1344589200E40FF4 /* LearnPassageViewController.m */; };
+		936B34321344589200E40FF4 /* LearnPassageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936B34301344589200E40FF4 /* LearnPassageViewController.xib */; };
+		936C0A1D12A855EB001622DB /* MemoryUnit.m in Sources */ = {isa = PBXBuildFile; fileRef = 936C0A1C12A855EB001622DB /* MemoryUnit.m */; };
 		937557DF128B77F900B93E77 /* default-data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 937557DE128B77F900B93E77 /* default-data.plist */; };
 		9383CA84126E70CA00D52DE1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9383CA82126E70CA00D52DE1 /* MainViewController.m */; };
 		9383CA85126E70CA00D52DE1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9383CA83126E70CA00D52DE1 /* MainViewController.xib */; };
 		93B5176B1272B92A0028EECE /* PassagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B517691272B92A0028EECE /* PassagesTableViewController.m */; };
 		93B5176C1272B92A0028EECE /* PassagesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */; };
 		93B517E212755F3C0028EECE /* Passage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B517E112755F3C0028EECE /* Passage.m */; };
-		93B5189E12762CC10028EECE /* DefaultPassages.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B5189D12762CC10028EECE /* DefaultPassages.m */; };
+		93B5189E12762CC10028EECE /* DefaultData.m in Sources */ = {isa = PBXBuildFile; fileRef = 93B5189D12762CC10028EECE /* DefaultData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,20 +55,27 @@
 		93431101129DE5FD00ADC66C /* LearnTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearnTextViewController.h; sourceTree = "<group>"; };
 		93431102129DE5FD00ADC66C /* LearnTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearnTextViewController.m; sourceTree = "<group>"; };
 		93431103129DE5FD00ADC66C /* LearnTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LearnTextViewController.xib; path = Classes/LearnTextViewController.xib; sourceTree = "<group>"; };
-		936C0A1B12A855EB001622DB /* Brick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Brick.h; path = ../Brick.h; sourceTree = "<group>"; };
-		936C0A1C12A855EB001622DB /* Brick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Brick.m; path = ../Brick.m; sourceTree = "<group>"; };
+		936B33AE134449BB00E40FF4 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		936B33AF134449BB00E40FF4 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		936B33B0134449BB00E40FF4 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RootViewController.xib; path = Classes/RootViewController.xib; sourceTree = "<group>"; };
+		936B342E1344589200E40FF4 /* LearnPassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearnPassageViewController.h; sourceTree = "<group>"; };
+		936B342F1344589200E40FF4 /* LearnPassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearnPassageViewController.m; sourceTree = "<group>"; };
+		936B34301344589200E40FF4 /* LearnPassageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LearnPassageViewController.xib; path = Classes/LearnPassageViewController.xib; sourceTree = "<group>"; };
+		936C0A1C12A855EB001622DB /* MemoryUnit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MemoryUnit.m; path = ../MemoryUnit.m; sourceTree = "<group>"; };
 		937557DE128B77F900B93E77 /* default-data.plist */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = text.plist.xml; path = "default-data.plist"; sourceTree = "<group>"; tabWidth = 4; usesTabs = 1; wrapsLines = 1; };
 		9383CA81126E70CA00D52DE1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
 		9383CA82126E70CA00D52DE1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
 		9383CA83126E70CA00D52DE1 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		939CC96812A7400400EA952D /* bible_memory_ipad 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "bible_memory_ipad 2.xcdatamodel"; sourceTree = "<group>"; };
+		93A2DA851336CCCB0069A725 /* MemoryUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryUnit.h; sourceTree = SOURCE_ROOT; };
 		93B517681272B92A0028EECE /* PassagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PassagesTableViewController.h; sourceTree = "<group>"; };
 		93B517691272B92A0028EECE /* PassagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PassagesTableViewController.m; sourceTree = "<group>"; };
 		93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = PassagesTableViewController.xib; path = Classes/PassagesTableViewController.xib; sourceTree = "<group>"; };
 		93B517E012755F3C0028EECE /* Passage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Passage.h; path = ../Passage.h; sourceTree = "<group>"; };
 		93B517E112755F3C0028EECE /* Passage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Passage.m; path = ../Passage.m; sourceTree = "<group>"; };
-		93B5189C12762CC10028EECE /* DefaultPassages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultPassages.h; sourceTree = "<group>"; };
-		93B5189D12762CC10028EECE /* DefaultPassages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultPassages.m; sourceTree = "<group>"; };
+		93B5189C12762CC10028EECE /* DefaultData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultData.h; sourceTree = "<group>"; };
+		93B5189D12762CC10028EECE /* DefaultData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultData.m; sourceTree = "<group>"; };
+		93CB92D813372D4900895D0A /* bible_memory_ipad 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "bible_memory_ipad 3.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,24 +96,28 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				936C0A1B12A855EB001622DB /* Brick.h */,
-				936C0A1C12A855EB001622DB /* Brick.m */,
+				93A2DA851336CCCB0069A725 /* MemoryUnit.h */,
+				936C0A1C12A855EB001622DB /* MemoryUnit.m */,
 				93B517E012755F3C0028EECE /* Passage.h */,
 				93B517E112755F3C0028EECE /* Passage.m */,
 				9383CA81126E70CA00D52DE1 /* MainViewController.h */,
 				9383CA82126E70CA00D52DE1 /* MainViewController.m */,
 				1D3623240D0F684500981E51 /* Bible_memory_ipadAppDelegate.h */,
 				1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */,
+				936B342E1344589200E40FF4 /* LearnPassageViewController.h */,
+				936B342F1344589200E40FF4 /* LearnPassageViewController.m */,
 				93431101129DE5FD00ADC66C /* LearnTextViewController.h */,
 				93431102129DE5FD00ADC66C /* LearnTextViewController.m */,
 				93431012129B2DBA00ADC66C /* ShowTextViewController.h */,
 				93431013129B2DBA00ADC66C /* ShowTextViewController.m */,
 				93B517681272B92A0028EECE /* PassagesTableViewController.h */,
 				93B517691272B92A0028EECE /* PassagesTableViewController.m */,
-				93B5189C12762CC10028EECE /* DefaultPassages.h */,
-				93B5189D12762CC10028EECE /* DefaultPassages.m */,
+				93B5189C12762CC10028EECE /* DefaultData.h */,
+				93B5189D12762CC10028EECE /* DefaultData.m */,
 				93431096129DC02D00ADC66C /* SegmentedControlController.h */,
 				93431097129DC02D00ADC66C /* SegmentedControlController.m */,
+				936B33AE134449BB00E40FF4 /* RootViewController.h */,
+				936B33AF134449BB00E40FF4 /* RootViewController.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -139,6 +154,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				936B34301344589200E40FF4 /* LearnPassageViewController.xib */,
+				936B33B0134449BB00E40FF4 /* RootViewController.xib */,
 				9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */,
 				93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */,
 				93431103129DE5FD00ADC66C /* LearnTextViewController.xib */,
@@ -217,6 +234,8 @@
 				937557DF128B77F900B93E77 /* default-data.plist in Resources */,
 				9343100F129B2D6F00ADC66C /* ShowTextViewController.xib in Resources */,
 				93431105129DE5FD00ADC66C /* LearnTextViewController.xib in Resources */,
+				936B33B2134449BB00E40FF4 /* RootViewController.xib in Resources */,
+				936B34321344589200E40FF4 /* LearnPassageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,11 +252,13 @@
 				9383CA84126E70CA00D52DE1 /* MainViewController.m in Sources */,
 				93B5176B1272B92A0028EECE /* PassagesTableViewController.m in Sources */,
 				93B517E212755F3C0028EECE /* Passage.m in Sources */,
-				93B5189E12762CC10028EECE /* DefaultPassages.m in Sources */,
+				93B5189E12762CC10028EECE /* DefaultData.m in Sources */,
 				93431015129B2DBA00ADC66C /* ShowTextViewController.m in Sources */,
 				93431098129DC02D00ADC66C /* SegmentedControlController.m in Sources */,
 				93431104129DE5FD00ADC66C /* LearnTextViewController.m in Sources */,
-				936C0A1D12A855EB001622DB /* Brick.m in Sources */,
+				936C0A1D12A855EB001622DB /* MemoryUnit.m in Sources */,
+				936B33B1134449BB00E40FF4 /* RootViewController.m in Sources */,
+				936B34311344589200E40FF4 /* LearnPassageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,8 +350,9 @@
 			children = (
 				28C3AD890F43EF2300507BA6 /* bible_memory_ipad.xcdatamodel */,
 				939CC96812A7400400EA952D /* bible_memory_ipad 2.xcdatamodel */,
+				93CB92D813372D4900895D0A /* bible_memory_ipad 3.xcdatamodel */,
 			);
-			currentVersion = 939CC96812A7400400EA952D /* bible_memory_ipad 2.xcdatamodel */;
+			currentVersion = 93CB92D813372D4900895D0A /* bible_memory_ipad 3.xcdatamodel */;
 			path = bible_memory_ipad.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

@@ -14,7 +14,7 @@
 
 // The designated initializer.
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)theManagedObjectContext {
-	if (self = [super initWithStyle:UITableViewStylePlain]) {
+	if ((self = [super initWithStyle:UITableViewStylePlain]) != nil) {
 	
         // Custom initialization.
 		self.managedObjectContext = theManagedObjectContext;

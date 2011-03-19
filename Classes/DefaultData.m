@@ -6,11 +6,14 @@
  Created by Geoffrey Hom on 10/25/10.
  */
 
-#import "Brick.h"
-#import "DefaultPassages.h"
+#import "DefaultData.h"
+#import "MemoryUnit.h"
 #import "Passage.h"
 
-@implementation DefaultPassages
+// Whether the default passages should be reset. (E.g., if they were changed.)
+static BOOL shouldBeReset = NO;
+
+@implementation DefaultData
 
 /**
  Add the default data to the given context.
@@ -55,7 +58,7 @@
 //				}
 			}
 			// add starting brick
-			Brick *aBrick = (Brick *)[NSEntityDescription insertNewObjectForEntityForName:@"Brick" inManagedObjectContext:theManagedObjectContext];
+			MemoryUnit *aBrick = (MemoryUnit *)[NSEntityDescription insertNewObjectForEntityForName:@"Brick" inManagedObjectContext:theManagedObjectContext];
 			[aPassage addBricksObject:aBrick];
 		}
 	}
@@ -103,6 +106,10 @@
 	}
 	
 	return instructionsPassage;
+}
+
++ (BOOL)shouldBeReset {
+    return shouldBeReset;
 }
 		
 @end

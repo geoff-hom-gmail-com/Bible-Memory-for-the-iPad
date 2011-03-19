@@ -2,8 +2,34 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>Apostles&apos; Creed</key>
+	<dict>
+		<key>Brick data</key>
+		<array>
+			<integer>0</integer>
+			<integer>65</integer>
+			<integer>111</integer>
+			<integer>178</integer>
+			<integer>245</integer>
+			<integer>315</integer>
+			<integer>381</integer>
+			<integer>440</integer>
+			<integer>523</integer>
+		</array>
+		<key>Text</key>
+		<string>I believe in God, the Father Almighty, maker of heaven and earth.
+
+And in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, and born of the virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried. He descended into hell. On the third day He rose again from the dead. He ascended into heaven and sits at the right hand of the Father. From thence He will come to judge the living and the dead.
+
+I believe in the Holy Spirit, the holy Christian church, the communion of saints, the forgiveness of sins, the resurrection of the body, and the life everlasting. Amen.
+</string>
+	</dict>
 	<key>Instructions</key>
 	<dict>
+		<key>Brick data</key>
+		<array>
+			<integer>0</integer>
+		</array>
 		<key>Text</key>
 		<string>Welcome to Bible Memory!
 
@@ -13,9 +39,9 @@ My goal is to train you to recall the Bible at any time, whether aloud or only i
 
 To start, you will type in a passage that you want to remember. However, to try a built-in passage first, just follow these steps:
 	
-	1) In the top-left of the screen, tap the title–in this case, "Instructions"–to show a list of passages. Then, tap a passage to show its text.
+	1) In the top-left of the screen, tap the title–in this case, &quot;Instructions&quot;–to show a list of passages. Then, tap a passage to show its text.
 
-	2) Next, in the top-right of the screen, tap "Learn text" to start the learning process. That's it! I will help you learn the text, one section at a time. And, when I think you might need a refresher, I will help you review!
+	2) Next, in the top-right of the screen, tap &quot;Learn text&quot; to start the learning process. That&apos;s it! I will help you learn the text, one section at a time. And, when I think you might need a refresher, I will help you review!
 
 		      –––––––
 
@@ -32,21 +58,9 @@ To create a new passage:
 		      –––––––
 
 To give feedback, send email to Geoff Hom (geoffhom@gmail.com).</string>
-		<key>Brick data</key>
-		<array>
-			<integer>0</integer>
-		</array>
 	</dict>
 	<key>Philippians 1 (NIV)</key>
 	<dict>
-		<key>Text</key>
-		<string>Paul and Timothy, servants of Christ Jesus,
-
-To all the saints in Christ Jesus at Philippi, together with the overseers and deacons:
-	
-Grace and peace to you from God our Father and the Lord Jesus Christ.
-
-I thank my God every time I remember you. In all my prayers for all of you, I always pray with joy because of your partnership in the gospel from the first day until now, being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus.</string>
 		<key>Brick data</key>
 		<array>
 			<integer>0</integer>
@@ -56,16 +70,17 @@ I thank my God every time I remember you. In all my prayers for all of you, I al
 			<integer>247</integer>
 			<integer>376</integer>
 		</array>
+		<key>Text</key>
+		<string>Paul and Timothy, servants of Christ Jesus,
+
+To all the saints in Christ Jesus at Philippi, together with the overseers and deacons:
+	
+Grace and peace to you from God our Father and the Lord Jesus Christ.
+
+I thank my God every time I remember you. In all my prayers for all of you, I always pray with joy because of your partnership in the gospel from the first day until now, being confident of this, that he who began a good work in you will carry it on to completion until the day of Christ Jesus.</string>
 	</dict>
 	<key>Sermon on the Mount (NIV)</key>
 	<dict>
-		<key>Text</key>
-		<string>Jesus went throughout Galilee, teaching in their synagogues, preaching the good news of the kingdom, and healing every disease and sickness among the people. News about him spread all over Syria, and people brought to him all who were ill with various diseases, those suffering severe pain, the demon-possessed, those having seizures, and the paralyzed, and he healed them. Large crowds from Galilee, the Decapolis, Jerusalem, Judea and the region across the Jordan followed him.
-
-Now when he saw the crowds, he went up on a mountainside and sat down. His disciples came to him, and he began to teach them saying:
-	
-	"Blessed are the poor in spirit, for theirs is the kingdom of heaven.
-	Blessed are those who mourn, for they will be comforted."</string>
 		<key>Brick data</key>
 		<array>
 			<integer>0</integer>
@@ -77,28 +92,44 @@ Now when he saw the crowds, he went up on a mountainside and sat down. His disci
 			<integer>551</integer>
 			<integer>613</integer>
 		</array>
-	</dict>
-	<key>Apostles' Creed</key>
-	<dict>
 		<key>Text</key>
-		<string>I believe in God, the Father Almighty, maker of heaven and earth.
+		<string>Jesus went throughout Galilee, teaching in their synagogues, preaching the good news of the kingdom, and healing every disease and sickness among the people. News about him spread all over Syria, and people brought to him all who were ill with various diseases, those suffering severe pain, the demon-possessed, those having seizures, and the paralyzed, and he healed them. Large crowds from Galilee, the Decapolis, Jerusalem, Judea and the region across the Jordan followed him.
 
-And in Jesus Christ, his only Son, our Lord, who was conceived by the Holy Spirit, and born of the virgin Mary, suffered under Pontius Pilate, was crucified, died and was buried. He descended into hell. On the third day He rose again from the dead. He ascended into heaven and sits at the right hand of the Father. From thence He will come to judge the living and the dead.
-
-I believe in the Holy Spirit, the holy Christian church, the communion of saints, the forgiveness of sins, the resurrection of the body, and the life everlasting. Amen.
-</string>
+Now when he saw the crowds, he went up on a mountainside and sat down. His disciples came to him, and he began to teach them saying:
+	
+	&quot;Blessed are the poor in spirit, for theirs is the kingdom of heaven.
+	Blessed are those who mourn, for they will be comforted.&quot;</string>
+	</dict>
+	<key>Philippians (The Message)</key>
+	<dict>
 		<key>Brick data</key>
 		<array>
 			<integer>0</integer>
-			<integer>65</integer>
-			<integer>111</integer>
-			<integer>178</integer>
-			<integer>245</integer>
-			<integer>315</integer>
-			<integer>381</integer>
-			<integer>440</integer>
-			<integer>523</integer>
 		</array>
+		<key>Text</key>
+		<string>Paul and Timothy, both of us committed servants of Christ Jesus, write this letter to all the followers of Jesus in Philippi, pastors and ministers included. We greet you with the grace and peace that comes from God our Father and our Master, Jesus Christ.
+			
+Every time you cross my mind, I break out in exclamations of thanks to God. Each exclamation is a trigger to prayer. I find myself praying for you with a glad heart. I am so pleased that you have continued on in this with us, believing and proclaiming God's Message, from the day you heard it right up to the present. There has never been the slightest doubt in my mind that the God who started this great work in you would keep at it and bring it to a flourishing finish on the very day Christ Jesus appears.
+			
+It's not at all fanciful for me to think this way about you. My prayers and hopes have deep roots in reality. You have, after all, stuck with me all the way from the time I was thrown in jail, put on trial, and came out of it in one piece. All along you have experienced with me the most generous help from God. He knows how much I love and miss you these days. Sometimes I think I feel as strongly about you as Christ does!
+			
+So this is my prayer: that your love will flourish and that you will not only love much but well. Learn to love appropriately. You need to use your head and test your feelings so that your love is sincere and intelligent, not sentimental gush. Live a lover's life, circumspect and exemplary, a life Jesus will be proud of: bountiful in fruits from the soul, making Jesus Christ attractive to all, getting everyone involved in the glory and praise of God.
+			
+I want to report to you, friends, that my imprisonment here has had the opposite of its intended effect. Instead of being squelched, the Message has actually prospered. All the soldiers here, and everyone else, too, found out that I'm in jail because of this Messiah. That piqued their curiosity, and now they've learned all about him. Not only that, but most of the followers of Jesus here have become far more sure of themselves in the faith than ever, speaking out fearlessly about God, about the Messiah.
+			
+It's true that some here preach Christ because with me out of the way, they think they'll step right into the spotlight. But the others do it with the best heart in the world. One group is motivated by pure love, knowing that I am here defending the Message, wanting to help. The others, now that I'm out of the picture, are merely greedy, hoping to get something out of it for themselves. Their motives are bad. They see me as their competition, and so the worse it goes for me, the better—they think—for them.
+			
+So how am I to respond? I've decided that I really don't care about their motives, whether mixed, bad, or indifferent. Every time one of them opens his mouth, Christ is proclaimed, so I just cheer them on!
+			
+And I'm going to keep that celebration going because I know how it's going to turn out. Through your faithful prayers and the generous response of the Spirit of Jesus Christ, everything he wants to do in and through me will be done. I can hardly wait to continue on my course. I don't expect to be embarrassed in the least. On the contrary, everything happening to me in this jail only serves to make Christ more accurately known, regardless of whether I live or die. They didn't shut me up; they gave me a pulpit! Alive, I'm Christ's messenger; dead, I'm his bounty. Life versus even more life! I can't lose.
+			
+As long as I'm alive in this body, there is good work for me to do. If I had to choose right now, I hardly know which I'd choose. Hard choice! The desire to break camp here and be with Christ is powerful. Some days I can think of nothing better. But most days, because of what you are going through, I am sure that it's better for me to stick it out here. So I plan to be around awhile, companion to you as your growth and joy in this life of trusting God continues. You can start looking forward to a great reunion when I come visit you again. We'll be praising Christ, enjoying each other.
+			
+Meanwhile, live in such a way that you are a credit to the Message of Christ. Let nothing in your conduct hang on whether I come or not. Your conduct must be the same whether I show up to see things for myself or hear of it from a distance. Stand united, singular in vision, contending for people's trust in the Message, the good news, not flinching or dodging in the slightest before the opposition. Your courage and unity will show them what they're up against: defeat for them, victory for you—and both because of God. There's far more to this life than trusting in Christ. There's also suffering for him. And the suffering is as much a gift as the trusting. You're involved in the same kind of struggle you saw me go through, on which you are now getting an updated report in this letter.
+			
+If you've gotten anything at all out of following Christ, if his love has made any difference in your life, if being in a community of the Spirit means anything to you, if you have a heart, if you care— then do me a favor: Agree with each other, love each other, be deep-spirited friends. Don't push your way to the front; don't sweet-talk your way to the top. Put yourself aside, and help others get ahead. Don't be obsessed with getting your own advantage. Forget yourselves long enough to lend a helping hand.
+			
+Think of yourselves the way Christ Jesus thought of himself. He had equal status with God but didn't think so much of himself that he had to cling to the advantages of that status no matter what. Not at all. When the time came, he set aside the privileges of deity and took on the status of a slave, became human! Having become human, he stayed human. It was an incredibly humbling process. He didn't claim special privileges. Instead, he lived a selfless, obedient life and then died a selfless, obedient death—and the worst kind of death at that—a crucifixion.</string>
 	</dict>
 </dict>
 </plist>

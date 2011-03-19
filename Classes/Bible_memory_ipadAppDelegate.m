@@ -1,45 +1,42 @@
 /*
-  Project: bible-memory-ipad
-	 File: Bible_memory_ipadAppDelegate.m
- 
- Created by Geoffrey Hom on 10/19/10.
+ File: Bible_memory_ipadAppDelegate.m
+ Authors: Geoffrey Hom (GeoffHom@gmail.com)
  */
 
 #import "Bible_memory_ipadAppDelegate.h"
-#import "DefaultPassages.h"
-#import "MainViewController.h"
+//#import "DefaultData.h"
+#import "RootViewController.h"
 
 @implementation Bible_memory_ipadAppDelegate
 
-@synthesize mainViewController, window;
+//@synthesize mainViewController, window;
+@synthesize navigationController, window;
 
 #pragma mark -
 #pragma mark Application lifecycle
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 
-    // Override point for customization after application launch.
-		
+	// Create root view controller and navigation controller.
+    UIViewController *aRootViewController = [[RootViewController alloc] init];
+	UINavigationController *aNavigationController = [[UINavigationController alloc] initWithRootViewController:aRootViewController];
+	[aRootViewController release];
+	self.navigationController = aNavigationController;
+	[aNavigationController release];
+	
 	// Make the main view controller.
-	MainViewController *aMainViewController = [[MainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
-	self.mainViewController = aMainViewController;
-	[aMainViewController release];
+	//MainViewController *aMainViewController = [[MainViewController alloc] initWithManagedObjectContext:self.managedObjectContext];
+//	self.mainViewController = aMainViewController;
+//	[aMainViewController release];
 	
 	// Set frame to account for status bar.
-	self.mainViewController.view.frame = [[UIScreen mainScreen] applicationFrame];
+//	self.mainViewController.view.frame = [[UIScreen mainScreen] applicationFrame];
 	
-	[window addSubview:self.mainViewController.view];
+	[window addSubview:self.navigationController.view];
 	
     [window makeKeyAndVisible];
 
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -52,6 +49,13 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	
 	[self applicationWillTerminate:application];
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    /*
+     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+     */
 }
 
 /**
@@ -71,6 +75,16 @@
             abort();
         } 
     }
+}
+
+#pragma mark -
+#pragma mark Application's Documents directory
+
+/**
+ Returns the path to the application's Documents directory.
+ */
+- (NSString *)applicationDocumentsDirectory {
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
 #pragma mark -
@@ -118,20 +132,26 @@
     
 	NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"bible_memory_ipad.sqlite"];
 	
-	// Uncomment line below to delete the existing store (e.g., in order to reset with default data).
-	//[[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
-	
-	// Note whether the persistent store already exists. (For initializing with default data.)
-	BOOL isPersistentStoreNew = NO;
-	if (![[NSFileManager defaultManager] fileExistsAtPath:storePath]) {
-		isPersistentStoreNew = YES;
-	}
+	//if ([DefaultData shouldBeReset]) {
+//        
+//        // Delete the existing store.
+//        [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
+//    }
+
+	// If the persistent store doesn't exist, copy the default store.
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:storePath]) {
+        NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"defaultStore" ofType:@"sqlite"];
+        if (defaultStorePath) {
+			[fileManager copyItemAtPath:defaultStorePath toPath:storePath error:NULL];
+        }
+    }
 	
 	NSURL *storeURL = [NSURL fileURLWithPath:storePath];
-	
     NSError *error = nil;
     persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
-    if (![persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+	NSPersistentStore *persistentStore = [persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
+    if (!persistentStore) {
         /*
          Replace this implementation with code to handle the error appropriately.
          
@@ -162,26 +182,16 @@
     } else {
 	
 		// If the persistent store is new, then add the default data.
-		if (isPersistentStoreNew) {
-			NSManagedObjectContext *aManagedObjectContext = [[NSManagedObjectContext alloc] init];
-			[aManagedObjectContext setPersistentStoreCoordinator:persistentStoreCoordinator_];
-			[DefaultPassages addDefaultData:aManagedObjectContext];
-			[aManagedObjectContext release];
-			NSLog(@"Default data added.");
-		}
+		//if (isPersistentStoreNew) {
+//			NSManagedObjectContext *aManagedObjectContext = [[NSManagedObjectContext alloc] init];
+//			[aManagedObjectContext setPersistentStoreCoordinator:persistentStoreCoordinator_];
+//			[DefaultData addDefaultData:aManagedObjectContext];
+//			[aManagedObjectContext release];
+//			NSLog(@"Default data added.");
+//		}
 	}
     
     return persistentStoreCoordinator_;
-}
-
-#pragma mark -
-#pragma mark Application's Documents directory
-
-/**
- Returns the path to the application's Documents directory.
- */
-- (NSString *)applicationDocumentsDirectory {
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
 #pragma mark -
@@ -192,7 +202,7 @@
     [managedObjectModel_ release];
     [persistentStoreCoordinator_ release];
     
-	[mainViewController release];
+	[navigationController release];
     [window release];
     [super dealloc];
 }

@@ -6,7 +6,7 @@
  Created by Geoffrey Hom on 11/22/10.
  */
 
-#import "Brick.h"
+#import "MemoryUnit.h"
 #import "Passage.h"
 #import "ShowTextViewController.h"
 
@@ -25,47 +25,48 @@
 
 // Color-code the phrases/bricks for the current passage. Enable brick editing.
 - (IBAction)editPhrases:(id)sender {
-	
-	// Color-code the bricks by using alternating colors in an HTML string.
-	
-	NSString *headerString = @"<html><head>"
-		"<style type=\"text/css\">"
-		"p {font-family:helvetica; font-size:20; white-space:pre-wrap;}"
-		".blue {color:blue;}"
-		".red {color:red;}"
-		"</style>"
-		"</head><body>"
-		"<p>";
-	NSString *footerString = @"</p>"
-		"</body></html>";
-		
-	// Color each brick alternately.
-	NSString *blueClassString = @"blue";
-	NSString *redClassString = @"red";
-	NSString *styleClassString = blueClassString;
-	NSString *aBrickString;
-	NSString *aColoredBrickString;
-	NSString *allColoredBricksString = @"";
-	for (Brick *aBrick in [self.currentPassage sortedBricks]) {
-		aBrickString = [self.currentPassage stringFromBrick:aBrick];
-		
-		// Add tag for CSS style around the brick.
-		if ([styleClassString isEqualToString:blueClassString]) {
-			styleClassString = redClassString;
-		} else {
-			styleClassString = blueClassString;
-		}
-		aColoredBrickString = [NSString stringWithFormat:@"<a class=\"%@\">%@</a>", styleClassString, aBrickString];
-		
-		allColoredBricksString = [allColoredBricksString stringByAppendingString:aColoredBrickString];
-	}	
-	NSString *htmlString = [NSString stringWithFormat:@"%@%@%@", headerString, allColoredBricksString, footerString];
-	[self.webView loadHTMLString:htmlString baseURL:nil];
+	//
+//	// Color-code the bricks by using alternating colors in an HTML string.
+//	
+//	NSString *headerString = @"<html><head>"
+//		"<style type=\"text/css\">"
+//		"p {font-family:helvetica; font-size:20; white-space:pre-wrap;}"
+//		".blue {color:blue;}"
+//		".red {color:red;}"
+//		"</style>"
+//		"</head><body>"
+//		"<p>";
+//	NSString *footerString = @"</p>"
+//		"</body></html>";
+//		
+//	// Color each brick alternately.
+//	NSString *blueClassString = @"blue";
+//	NSString *redClassString = @"red";
+//	NSString *styleClassString = blueClassString;
+//	NSString *aBrickString;
+//	NSString *aColoredBrickString;
+//	NSString *allColoredBricksString = @"";
+//	for (MemoryUnit *aBrick in [self.currentPassage sortedBricks]) {
+//		aBrickString = [self.currentPassage stringFromBrick:aBrick];
+//		
+//		// Add tag for CSS style around the brick.
+//		if ([styleClassString isEqualToString:blueClassString]) {
+//			styleClassString = redClassString;
+//		} else {
+//			styleClassString = blueClassString;
+//		}
+//		aColoredBrickString = [NSString stringWithFormat:@"<a class=\"%@\">%@</a>", styleClassString, aBrickString];
+//		
+//		allColoredBricksString = [allColoredBricksString stringByAppendingString:aColoredBrickString];
+//	}	
+//	NSString *htmlString = [NSString stringWithFormat:@"%@%@%@", headerString, allColoredBricksString, footerString];
+//	[self.webView loadHTMLString:htmlString baseURL:nil];
 }
 
 // The designated initializer.
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)theManagedObjectContext {
-	if (self = [super initWithNibName:nil bundle:nil]) {
+	self = [super initWithNibName:nil bundle:nil];
+	if (self) {
 	
         // Custom initialization.
 		self.managedObjectContext = theManagedObjectContext;
@@ -76,23 +77,23 @@
 //for testing. reset this passage to just one brick with a starting index of 0.
 - (IBAction)resetBricks:(id)sender {
 	
-	// show first brick
-	self.currentPassage.rankOfCurrentStartingBrick = [NSNumber numberWithInt:0];
-	self.currentPassage.rankOfCurrentEndingBrick = self.currentPassage.rankOfCurrentStartingBrick;
-	
-	// delete bricks, except the first one
-	NSArray *sortedBricksArray = [self.currentPassage sortedBricks];
-	for (int i = 1; i < sortedBricksArray.count; i++) {
-		[self.managedObjectContext deleteObject:[sortedBricksArray objectAtIndex:i]];
-	}
-	
-	// should change the starting index of the remaining brick to 0 . . . but it should be that way already.
-	
-	// Save changes.
-	NSError *error; 
-	if (![self.managedObjectContext save:&error]) {
-		// Handle the error.
-	}
+//	// show first brick
+//	self.currentPassage.rankOfCurrentStartingBrick = [NSNumber numberWithInt:0];
+//	self.currentPassage.rankOfCurrentEndingBrick = self.currentPassage.rankOfCurrentStartingBrick;
+//	
+//	// delete bricks, except the first one
+//	NSArray *sortedBricksArray = [self.currentPassage sortedBricks];
+//	for (int i = 1; i < sortedBricksArray.count; i++) {
+//		[self.managedObjectContext deleteObject:[sortedBricksArray objectAtIndex:i]];
+//	}
+//	
+//	// should change the starting index of the remaining brick to 0 . . . but it should be that way already.
+//	
+//	// Save changes.
+//	NSError *error; 
+//	if (![self.managedObjectContext save:&error]) {
+//		// Handle the error.
+//	}
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.

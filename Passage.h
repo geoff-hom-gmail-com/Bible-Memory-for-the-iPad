@@ -1,55 +1,68 @@
-//
-//  Passage.h
-//  bible-memory-ipad
-//
-//  A passage is some text and its title. A passage's text is divided into one or more non-overlapping bricks; each brick represents a minimal learning unit.
-//
-//  Created by Geoffrey Hom on 10/24/10.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
-//
+/*
+ File: Passage.h
+ Authors: Geoffrey Hom (GeoffHom@gmail.com)
+ Abstract: A passage consists of text and a corresponding title. When a user memorizes part of a passage, that part is made into a memory unit.
+ */
 
 #import <CoreData/CoreData.h>
 
-@class Brick;
+//@class MemoryUnit;
 
 @interface Passage : NSManagedObject {
-	BOOL sortedBricksIsCurrent;
-
-@private
-	NSArray *sortedBricks_;
+//	BOOL memoryUnitsAreSorted;
+//	NSArray *sortedMemoryUnits;
 }
 
-@property (assign) BOOL sortedBricksIsCurrent;
+//@property (assign) BOOL memoryUnitsAreSorted;
 
-@property (nonatomic, retain) NSSet* bricks;
-
-// Note that these ranks are NSNumbers, because Core Data forces that, but rankOfBrick: returns an NSUInteger.
-@property (nonatomic, retain) NSNumber *rankOfCurrentEndingBrick;
-@property (nonatomic, retain) NSNumber *rankOfCurrentStartingBrick;
-
+// Core Data.
+//@property (nonatomic, retain) NSSet* memoryUnits;
+//@property (nonatomic, retain) NSNumber *rankOfCurrentEndingMemoryUnit_;
+//@property (nonatomic, retain) NSNumber *rankOfCurrentStartingMemoryUnit_;
 @property (nonatomic, retain) NSString *text;
 @property (nonatomic, retain) NSString *title;
+//- (NSUInteger)endingIndexOfClause:(NSUInteger)theStartingIndex;
 
-- (void)addObservers;
-- (Brick *)currentStartingBrick;
-- (Brick *)currentEndingBrick;
-- (NSUInteger)endingIndexOfBrick:(Brick *)theBrick;
-- (NSUInteger)endingIndexOfClause:(NSUInteger)theStartingIndex;
-- (NSUInteger)lengthOfBrick:(Brick *)theBrick;
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
-- (NSUInteger)rankOfBrick:(Brick *)theBrick;
-- (void)removeObservers;
-- (NSArray *)sortedBricks;
-- (NSString *)stringFromBrick:(Brick *)theBrick;
-- (NSString *)stringFromCurrentBricks;
-- (NSString *)stringFromStartOfCurrentBricks;
+
+//
+//// Watch for changes in each memory unit. 
+//- (void)addObservers;
+//
+//// Return the first memory unit of the ones currently being learned.
+//- (MemoryUnit *)currentStartingMemoryUnit;
+//
+//// Return the last memory unit of the ones currently being learned.
+//- (MemoryUnit *)currentEndingMemoryUnit;
+//
+//- (NSUInteger)endingIndexOfMemoryUnit:(MemoryUnit *)theBrick;
+
+
+//
+//- (NSUInteger)lengthOfMemoryUnit:(MemoryUnit *)theBrick;
+//
+//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
+//
+//- (NSUInteger)rankOfCurrentEndingMemoryUnit;
+//
+//- (NSUInteger)rankOfCurrentStartingMemoryUnit;
+//
+//- (NSUInteger)rankOfMemoryUnit:(MemoryUnit *)theBrick;
+//
+//- (void)removeObservers;
+//
+//- (NSArray *)sortedBricks;
+//
+//- (NSString *)stringFromBrick:(MemoryUnit *)theBrick;
+//
+//- (NSString *)stringFromCurrentBricks;
+//
+//- (NSString *)stringFromStartOfCurrentBricks;
 
 @end
 
-@interface Passage (CoreDataGeneratedAccessors)
-- (void)addBricksObject:(Brick *)value;
-- (void)removeBricksObject:(Brick *)value;
-- (void)addBricks:(NSSet *)value;
-- (void)removeBricks:(NSSet *)value;
-
-@end
+//@interface Passage (CoreDataGeneratedAccessors)
+//- (void)addMemoryUnitsObject:(MemoryUnit *)value;
+//- (void)removeMemoryUnitsObject:(MemoryUnit *)value;
+//- (void)addMemoryUnits:(NSSet *)value;
+//- (void)removeMemoryUnits:(NSSet *)value;
+//@end

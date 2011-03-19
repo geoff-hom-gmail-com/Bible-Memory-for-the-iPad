@@ -5,7 +5,7 @@
  Created by Geoffrey Hom on 10/19/10.
  */
 
-#import "DefaultPassages.h"
+#import "DefaultData.h"
 #import "LearnTextViewController.h"
 #import "MainViewController.h"
 #import "Passage.h"
@@ -35,7 +35,7 @@
 
 // The designated initializer.
 - (id)initWithManagedObjectContext:(NSManagedObjectContext *)theManagedObjectContext {
-	if (self = [super initWithNibName:nil bundle:nil]) {
+	if ((self = [super initWithNibName:nil bundle:nil])) {
 	
         // Custom initialization.
 		self.managedObjectContext = theManagedObjectContext;
@@ -104,7 +104,7 @@
 	[aNavigationController release];
 	
 	// Show instructions.
-	Passage *instructionsPassage = [DefaultPassages getInstructions:self.managedObjectContext];
+	Passage *instructionsPassage = [DefaultData getInstructions:self.managedObjectContext];
 	[self passageSelected:instructionsPassage];
 	
 	// Show initial view based on segmented control.
