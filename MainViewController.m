@@ -104,8 +104,8 @@
 	[aNavigationController release];
 	
 	// Show instructions.
-	Passage *instructionsPassage = [DefaultData getInstructions:self.managedObjectContext];
-	[self passageSelected:instructionsPassage];
+//	Passage *instructionsPassage = [DefaultData getInstructions:self.managedObjectContext];
+//	[self passageSelected:instructionsPassage];
 	
 	// Show initial view based on segmented control.
 	self.segmentedControl.selectedSegmentIndex = 0;

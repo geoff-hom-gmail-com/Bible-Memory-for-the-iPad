@@ -3,15 +3,19 @@
  Authors: Geoffrey Hom (GeoffHom@gmail.com)
  */
 
+#import "DefaultData.h"
 #import "LearnPassageViewController.h"
+#import "Passage.h"
 #import "RootViewController.h"
 
 @implementation RootViewController
 
-@synthesize textField;
+@synthesize logTextView, managedObjectContext, passageTitlesTextView;
 
 - (void)dealloc {
-	[textField release];
+	[logTextView release];
+	[managedObjectContext release];
+	[passageTitlesTextView release];
     [super dealloc];
 }
 
@@ -40,17 +44,61 @@
 }
 */
 
+- (IBAction)makeDefaultDataStore:(id)sender {
+	[DefaultData makeStore];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     // Overriden to allow any orientation.
     return YES;
 }
 
-/*
+// for dev. show passage titles. currently from default data store.
+- (void)showPassageTitles {
+
+	NSFetchRequest *request = [[NSFetchRequest alloc] init]; 
+	
+	// Set entity.
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Passage" inManagedObjectContext:self.managedObjectContext]; 
+	[request setEntity:entity];
+	
+	// Set sorting: alphabetize by title.
+	NSSortDescriptor *aSortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"title" ascending:YES selector:@selector(localizedCaseInsensitiveCompare:)];
+	NSArray *sortDescriptors = [NSArray arrayWithObject:aSortDescriptor];
+	[request setSortDescriptors:sortDescriptors];
+	
+	// Fetch.
+	NSError *error; 
+	NSMutableArray *fetchResults = [[self.managedObjectContext executeFetchRequest:request error:&error] mutableCopy]; 
+	
+	[request release];
+	
+	if (fetchResults == nil) {
+	
+		// Handle the error.
+		NSLog(@"Fetch result was nil.");
+	}
+	
+	NSArray *passageArray = fetchResults;
+	//NSLog(@"testing rvc: %@", [passageArray componentsJoinedByString:@"\n"]);
+	NSString *passageTitles = @"";
+	for (Passage *aPassage in passageArray) {
+		NSLog(@"passage title: %@", aPassage.title);
+		passageTitles = [passageTitles stringByAppendingFormat:@"%@\n", aPassage.title];
+	}
+	self.passageTitlesTextView.text = passageTitles;
+
+}
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
+
     [super viewDidLoad];
+	
+	// temp; show passage titles from default data store
+	[self showPassageTitles];
 }
-*/
+
 
 - (void)viewDidUnload {
 
@@ -58,7 +106,8 @@
 	
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-	self.textField = nil;
+	self.logTextView = nil;
+	self.passageTitlesTextView = nil;
 	
 	// Release any data that is recreated in viewDidLoad.
 }

@@ -3,11 +3,13 @@
  Authors: Geoffrey Hom (GeoffHom@gmail.com)
  */
 
-#import "Bible_memory_ipadAppDelegate.h"
-//#import "DefaultData.h"
+#import "BibleMemoryAppDelegate.h"
+#import "DefaultData.h"
 #import "RootViewController.h"
 
-@implementation Bible_memory_ipadAppDelegate
+NSString *mainStoreName = @"bible_memory_ipad.sqlite";
+
+@implementation BibleMemoryAppDelegate
 
 //@synthesize mainViewController, window;
 @synthesize navigationController, window;
@@ -18,8 +20,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {    
 
 	// Create root view controller and navigation controller.
-    UIViewController *aRootViewController = [[RootViewController alloc] init];
+    RootViewController *aRootViewController = [[RootViewController alloc] init];
 	UINavigationController *aNavigationController = [[UINavigationController alloc] initWithRootViewController:aRootViewController];
+	aRootViewController.managedObjectContext = self.managedObjectContext;
 	[aRootViewController release];
 	self.navigationController = aNavigationController;
 	[aNavigationController release];
@@ -80,11 +83,12 @@
 #pragma mark -
 #pragma mark Application's Documents directory
 
-/**
- Returns the path to the application's Documents directory.
- */
-- (NSString *)applicationDocumentsDirectory {
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+- (NSURL *)applicationDocumentsDirectory {
+
+	NSFileManager *aFileManager = [[NSFileManager alloc] init];
+	NSURL *url = [[aFileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+	[aFileManager release];
+    return url;
 }
 
 #pragma mark -
@@ -126,29 +130,21 @@
  If the coordinator doesn't already exist, it is created and the application's store added to it.
  */
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
-    if (persistentStoreCoordinator_ != nil) {
+	
+	if (persistentStoreCoordinator_ != nil) {
         return persistentStoreCoordinator_;
     }
     
-	NSString *storePath = [[self applicationDocumentsDirectory] stringByAppendingPathComponent: @"bible_memory_ipad.sqlite"];
-	
-	//if ([DefaultData shouldBeReset]) {
-//        
-//        // Delete the existing store.
-//        [[NSFileManager defaultManager] removeItemAtPath:storePath error:nil];
-//    }
-
-	// If the persistent store doesn't exist, copy the default store.
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if (![fileManager fileExistsAtPath:storePath]) {
-        NSString *defaultStorePath = [[NSBundle mainBundle] pathForResource:@"defaultStore" ofType:@"sqlite"];
-        if (defaultStorePath) {
-			[fileManager copyItemAtPath:defaultStorePath toPath:storePath error:NULL];
-        }
-    }
-	
-	NSURL *storeURL = [NSURL fileURLWithPath:storePath];
-    NSError *error = nil;
+	// If the persistent store doesn't exist, then copy the default store to it.
+	NSFileManager *aFileManager = [[NSFileManager alloc] init];
+	NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:mainStoreName];
+	NSString *storePath = [storeURL path];
+	if (![aFileManager fileExistsAtPath:storePath]) {
+		[DefaultData copyStoreToURL:storeURL];
+	} 
+	[aFileManager release];
+		
+	NSError *error = nil;
     persistentStoreCoordinator_ = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
 	NSPersistentStore *persistentStore = [persistentStoreCoordinator_ addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error];
     if (!persistentStore) {
@@ -179,17 +175,7 @@
          */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    } else {
-	
-		// If the persistent store is new, then add the default data.
-		//if (isPersistentStoreNew) {
-//			NSManagedObjectContext *aManagedObjectContext = [[NSManagedObjectContext alloc] init];
-//			[aManagedObjectContext setPersistentStoreCoordinator:persistentStoreCoordinator_];
-//			[DefaultData addDefaultData:aManagedObjectContext];
-//			[aManagedObjectContext release];
-//			NSLog(@"Default data added.");
-//		}
-	}
+    }
     
     return persistentStoreCoordinator_;
 }

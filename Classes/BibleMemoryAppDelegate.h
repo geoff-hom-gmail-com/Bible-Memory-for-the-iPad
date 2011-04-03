@@ -1,4 +1,6 @@
 /*
+ Program: Bible Memory
+ Version: 0.04
  File: Bible_memory_ipadAppDelegate.h
  Authors: Geoffrey Hom (GeoffHom@gmail.com)
  Abstract: The application delegate. 
@@ -7,7 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface Bible_memory_ipadAppDelegate : NSObject <UIApplicationDelegate> {
+// Name of the file for the main Core Data store.
+extern NSString *mainStoreName;
+
+@interface BibleMemoryAppDelegate : NSObject <UIApplicationDelegate> {
     UINavigationController *navigationController;
 	UIWindow *window;
     
@@ -24,7 +29,8 @@
 @property (nonatomic, retain, readonly) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-- (NSString *)applicationDocumentsDirectory;
+// The URL to the application's Documents directory.
+- (NSURL *)applicationDocumentsDirectory;
 
 @end
 

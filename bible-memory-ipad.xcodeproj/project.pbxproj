@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* Bible_memory_ipadAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */; };
+		1D3623260D0F684500981E51 /* BibleMemoryAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* BibleMemoryAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -20,6 +20,7 @@
 		93431098129DC02D00ADC66C /* SegmentedControlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431097129DC02D00ADC66C /* SegmentedControlController.m */; };
 		93431104129DE5FD00ADC66C /* LearnTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431102129DE5FD00ADC66C /* LearnTextViewController.m */; };
 		93431105129DE5FD00ADC66C /* LearnTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93431103129DE5FD00ADC66C /* LearnTextViewController.xib */; };
+		936585D91349B5F6000D3679 /* defaultStore.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 936585D81349B5F6000D3679 /* defaultStore.sqlite */; };
 		936B33B1134449BB00E40FF4 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936B33AF134449BB00E40FF4 /* RootViewController.m */; };
 		936B33B2134449BB00E40FF4 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 936B33B0134449BB00E40FF4 /* RootViewController.xib */; };
 		936B34311344589200E40FF4 /* LearnPassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 936B342F1344589200E40FF4 /* LearnPassageViewController.m */; };
@@ -36,8 +37,8 @@
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* Bible_memory_ipadAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bible_memory_ipadAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bible_memory_ipadAppDelegate.m; sourceTree = "<group>"; };
+		1D3623240D0F684500981E51 /* BibleMemoryAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BibleMemoryAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* BibleMemoryAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BibleMemoryAppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* bible-memory-ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bible-memory-ipad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -55,6 +56,7 @@
 		93431101129DE5FD00ADC66C /* LearnTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LearnTextViewController.h; sourceTree = "<group>"; };
 		93431102129DE5FD00ADC66C /* LearnTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LearnTextViewController.m; sourceTree = "<group>"; };
 		93431103129DE5FD00ADC66C /* LearnTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = LearnTextViewController.xib; path = Classes/LearnTextViewController.xib; sourceTree = "<group>"; };
+		936585D81349B5F6000D3679 /* defaultStore.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = defaultStore.sqlite; sourceTree = "<group>"; };
 		936B33AE134449BB00E40FF4 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		936B33AF134449BB00E40FF4 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		936B33B0134449BB00E40FF4 /* RootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RootViewController.xib; path = Classes/RootViewController.xib; sourceTree = "<group>"; };
@@ -102,8 +104,8 @@
 				93B517E112755F3C0028EECE /* Passage.m */,
 				9383CA81126E70CA00D52DE1 /* MainViewController.h */,
 				9383CA82126E70CA00D52DE1 /* MainViewController.m */,
-				1D3623240D0F684500981E51 /* Bible_memory_ipadAppDelegate.h */,
-				1D3623250D0F684500981E51 /* Bible_memory_ipadAppDelegate.m */,
+				1D3623240D0F684500981E51 /* BibleMemoryAppDelegate.h */,
+				1D3623250D0F684500981E51 /* BibleMemoryAppDelegate.m */,
 				936B342E1344589200E40FF4 /* LearnPassageViewController.h */,
 				936B342F1344589200E40FF4 /* LearnPassageViewController.m */,
 				93431101129DE5FD00ADC66C /* LearnTextViewController.h */,
@@ -154,6 +156,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				936585D81349B5F6000D3679 /* defaultStore.sqlite */,
 				936B34301344589200E40FF4 /* LearnPassageViewController.xib */,
 				936B33B0134449BB00E40FF4 /* RootViewController.xib */,
 				9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */,
@@ -236,6 +239,7 @@
 				93431105129DE5FD00ADC66C /* LearnTextViewController.xib in Resources */,
 				936B33B2134449BB00E40FF4 /* RootViewController.xib in Resources */,
 				936B34321344589200E40FF4 /* LearnPassageViewController.xib in Resources */,
+				936585D91349B5F6000D3679 /* defaultStore.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,7 +251,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* Bible_memory_ipadAppDelegate.m in Sources */,
+				1D3623260D0F684500981E51 /* BibleMemoryAppDelegate.m in Sources */,
 				28193055112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld in Sources */,
 				9383CA84126E70CA00D52DE1 /* MainViewController.m in Sources */,
 				93B5176B1272B92A0028EECE /* PassagesTableViewController.m in Sources */,

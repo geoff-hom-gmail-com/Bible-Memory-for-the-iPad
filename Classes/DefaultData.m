@@ -6,23 +6,34 @@
  Created by Geoffrey Hom on 10/25/10.
  */
 
+#import "BibleMemoryAppDelegate.h"
 #import "DefaultData.h"
-#import "MemoryUnit.h"
+//#import "MemoryUnit.h"
 #import "Passage.h"
 
 // Whether the default passages should be reset. (E.g., if they were changed.)
 static BOOL shouldBeReset = NO;
 
+NSString *defaultStoreName = @"defaultStore.sqlite";
+
+
+// Private category for private methods.
+@interface DefaultData ()
+
+// Add the default data (from a property list) to the given context.
++ (void)addDefaultData:(NSManagedObjectContext *)theManagedObjectContext;
+
+@end
+
 @implementation DefaultData
 
-/**
- Add the default data to the given context.
- */
 + (void)addDefaultData:(NSManagedObjectContext *)theManagedObjectContext {
 	
 	// Get the default data from the default-data property list.
 	NSString *defaultDataPath = [[NSBundle mainBundle] pathForResource:@"default-data" ofType:@"plist"];
-	NSData *defaultDataXML = [[NSFileManager defaultManager] contentsAtPath:defaultDataPath];
+	NSFileManager *aFileManager = [[NSFileManager alloc] init];
+	NSData *defaultDataXML = [aFileManager contentsAtPath:defaultDataPath];
+	[aFileManager release];
 	NSString *errorDesc = nil; 
 	NSPropertyListFormat format;
 	NSDictionary *rootDictionary = (NSDictionary *)[NSPropertyListSerialization propertyListFromData:defaultDataXML mutabilityOption:NSPropertyListMutableContainersAndLeaves format:&format errorDescription:&errorDesc];
@@ -58,14 +69,28 @@ static BOOL shouldBeReset = NO;
 //				}
 			}
 			// add starting brick
-			MemoryUnit *aBrick = (MemoryUnit *)[NSEntityDescription insertNewObjectForEntityForName:@"Brick" inManagedObjectContext:theManagedObjectContext];
-			[aPassage addBricksObject:aBrick];
+			//MemoryUnit *aBrick = (MemoryUnit *)[NSEntityDescription insertNewObjectForEntityForName:@"Brick" inManagedObjectContext:theManagedObjectContext];
+//			[aPassage addBricksObject:aBrick];
 		}
 	}
 		
 	NSError *error; 
 	if (![theManagedObjectContext save:&error]) {
 		// Handle the error.
+	}
+	NSLog(@"Default data added to current context.");
+}
+
++ (void)copyStoreToURL:(NSURL *)theURL {
+
+	NSURL *defaultStoreURL = [[NSBundle mainBundle] URLForResource:defaultStoreName withExtension:nil];
+	if (defaultStoreURL) {
+		NSFileManager *aFileManager = [[NSFileManager alloc] init];
+		[aFileManager copyItemAtURL:defaultStoreURL toURL:theURL error:NULL];
+		[aFileManager release];
+		NSLog(@"Default store copied to main store.");
+	} else {
+		NSLog(@"Warning: Default store not found in main bundle.");
 	}
 }
 
@@ -106,6 +131,57 @@ static BOOL shouldBeReset = NO;
 	}
 	
 	return instructionsPassage;
+}
+
++ (void)makeStore {
+	
+	// Delete existing default-data store, if any.
+	BibleMemoryAppDelegate *aBibleMemoryAppDelegate = [[UIApplication sharedApplication] delegate];
+	NSURL *applicationDocumentsDirectoryURL = [aBibleMemoryAppDelegate applicationDocumentsDirectory];
+	NSURL *defaultStoreURL = [applicationDocumentsDirectoryURL URLByAppendingPathComponent:defaultStoreName];
+	NSFileManager *aFileManager = [[NSFileManager alloc] init];
+	BOOL deletionResult = [aFileManager removeItemAtURL:defaultStoreURL error:nil];
+	NSLog(@"Deleted previous default-data store from application's documents directory: %d", deletionResult);
+	[aFileManager release];
+	
+	// Remove the main store from the persistent store coordinator.
+	NSURL *mainStoreURL = [applicationDocumentsDirectoryURL URLByAppendingPathComponent:mainStoreName];
+	NSPersistentStoreCoordinator *aPersistentStoreCoordinator = aBibleMemoryAppDelegate.persistentStoreCoordinator;
+	NSPersistentStore *mainPersistentStore = [aPersistentStoreCoordinator persistentStoreForURL:mainStoreURL];
+	[aPersistentStoreCoordinator removePersistentStore:mainPersistentStore error:nil];
+	
+	// Add the default-data store to the persistent store coordinator.
+	NSError *error = nil;
+	NSPersistentStore *defaultPersistentStore = [aPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:defaultStoreURL options:nil error:&error];
+	if (!defaultPersistentStore) {
+		NSLog(@"Unresolved error making default store: %@, %@", error, [error userInfo]);
+	} else {
+		NSLog(@"Default store added: %@", [defaultStoreURL path]);
+	}
+
+	// Populate the store.
+	[DefaultData addDefaultData:aBibleMemoryAppDelegate.managedObjectContext];
+	
+	// Remove the default-data store and add back the main store.
+	[aPersistentStoreCoordinator removePersistentStore:defaultPersistentStore error:nil];
+	[aPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:mainStoreURL options:nil error:nil];
+}
+
+// deprecated?
++ (void)reset {
+
+	// Remove the main store from the persistent store coordinator.
+	BibleMemoryAppDelegate *aBibleMemoryAppDelegate = [[UIApplication sharedApplication] delegate];
+	NSURL *mainStoreURL = [[aBibleMemoryAppDelegate applicationDocumentsDirectory] URLByAppendingPathComponent:mainStoreName];
+	NSPersistentStoreCoordinator *aPersistentStoreCoordinator = aBibleMemoryAppDelegate.persistentStoreCoordinator;
+	NSPersistentStore *mainPersistentStore = [aPersistentStoreCoordinator persistentStoreForURL:mainStoreURL];
+	[aPersistentStoreCoordinator removePersistentStore:mainPersistentStore error:nil];
+	
+	// Replace the main store file with the default store file.
+	[DefaultData copyStoreToURL:mainStoreURL];
+	
+	// Add back the main store.
+	[aPersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:mainStoreURL options:nil error:nil];
 }
 
 + (BOOL)shouldBeReset {

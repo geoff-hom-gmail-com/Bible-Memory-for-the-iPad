@@ -19,7 +19,6 @@
 // Show the next clause. By "clause" we mean the next set of words ending in a punctuation mark, with a minimum of 3 words. However, if part of a clause is already showing, show that entire clause (so less than 3 words may be added).
 - (IBAction)addClause:(id)sender;
 
-
 // If any of the passage is showing, hide it. If hidden, show it. The amount to show is determined by the other passage controls and can still be changed while the passage is hidden.
 - (IBAction)hideOrShowText:(id)sender;
 
