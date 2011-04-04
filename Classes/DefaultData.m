@@ -1,14 +1,10 @@
 /*
-  Project: bible-memory-ipad
-	 File: DefaultPassages.m
- Abstract:
- 
- Created by Geoffrey Hom on 10/25/10.
+ File: DefaultData.m
+ Authors: Geoffrey Hom (GeoffHom@gmail.com)
  */
 
 #import "BibleMemoryAppDelegate.h"
 #import "DefaultData.h"
-//#import "MemoryUnit.h"
 #import "Passage.h"
 
 // Whether the default passages should be reset. (E.g., if they were changed.)
@@ -94,7 +90,7 @@ NSString *defaultStoreName = @"defaultStore.sqlite";
 	}
 }
 
-/**
+/*
  Return the instructions passage.
  really, this just gets a passage with the title "instructions," so it could be a more generic/useful method. and maybe a class method of Passage, not DefaultPassages.
  */

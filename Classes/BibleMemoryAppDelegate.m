@@ -11,7 +11,6 @@ NSString *mainStoreName = @"bible_memory_ipad.sqlite";
 
 @implementation BibleMemoryAppDelegate
 
-//@synthesize mainViewController, window;
 @synthesize navigationController, window;
 
 #pragma mark -
@@ -176,7 +175,6 @@ NSString *mainStoreName = @"bible_memory_ipad.sqlite";
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
     return persistentStoreCoordinator_;
 }
 

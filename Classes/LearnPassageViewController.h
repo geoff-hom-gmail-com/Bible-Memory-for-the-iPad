@@ -6,24 +6,34 @@
 
 #import <UIKit/UIKit.h>
 
+@class Passage;
+
 @interface LearnPassageViewController : UIViewController {
 }
 
+// Control for showing more clauses.
 @property (nonatomic, retain) IBOutlet UIButton *addClauseButton;
-@property (nonatomic, retain) IBOutlet UIButton *addWordButton;
-@property (nonatomic, retain) IBOutlet UIButton *hideOrShowTextButton;
-@property (nonatomic, retain) IBOutlet UIButton *removeClauseButton;
-@property (nonatomic, retain) IBOutlet UIButton *removeWordButton;
-@property (nonatomic, retain) IBOutlet UITextView *textView;
 
-// Show the next clause. By "clause" we mean the next set of words ending in a punctuation mark, with a minimum of 3 words. However, if part of a clause is already showing, show that entire clause (so less than 3 words may be added).
-- (IBAction)addClause:(id)sender;
+// Control for showing more words.
+@property (nonatomic, retain) IBOutlet UIButton *addWordButton;
+
+// Control for hiding/showing all (showable) text.
+@property (nonatomic, retain) IBOutlet UIButton *hideOrShowTextButton;
+
+// Control for showing less clauses.
+@property (nonatomic, retain) IBOutlet UIButton *removeClauseButton;
+
+// Control for showing less words.
+@property (nonatomic, retain) IBOutlet UIButton *removeWordButton;
+
+// For displaying the passage text.
+@property (nonatomic, retain) IBOutlet UITextView *textView;
 
 // If any of the passage is showing, hide it. If hidden, show it. The amount to show is determined by the other passage controls and can still be changed while the passage is hidden.
 - (IBAction)hideOrShowText:(id)sender;
 
-// Hide the last clause. By "clause" we arbitrarily mean a sequence of at least three words ending with a punctuation mark. If just part of a clause is showing, then hide that clause. (So less than 3 words may be hidden.)
-- (IBAction)removeClause:(id)sender;
+// The designated initializer.
+- (id)initWithPassage:(Passage *)thePassage;
 
 // Call a method based on the sender's identity. Then, after an initial delay, repeat the method indefinitely. (Example: holding down the delete key.)
 - (IBAction)repeatAMethodBasedOnSender:(id)sender;

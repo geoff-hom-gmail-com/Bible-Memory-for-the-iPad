@@ -1,7 +1,7 @@
 /*
  File: DefaultData.h
  Authors: Geoffrey Hom (GeoffHom@gmail.com)
- Abstract: For making default data for a persistant store.
+ Abstract: For working with the default data.
  */
 
 #import <Foundation/Foundation.h>
@@ -27,6 +27,7 @@ extern NSString *defaultStoreName;
 
 
 //+ (Passage *)getInstructions:(NSManagedObjectContext *)theManagedObjectContext;
+//deprecated?
 + (BOOL)shouldBeReset;
 
 @end
