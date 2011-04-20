@@ -202,7 +202,7 @@
 			<key>Content</key>
 			<dict>
 				<key>PBXProjectModuleGUID</key>
-				<string>9324D7C8135E710100CFAEDF</string>
+				<string>9324D993135FAED900CFAEDF</string>
 				<key>PBXProjectModuleLabel</key>
 				<string>LearnPassageViewController.m</string>
 				<key>PBXSplitModuleInNavigatorKey</key>
@@ -210,16 +210,16 @@
 					<key>Split0</key>
 					<dict>
 						<key>PBXProjectModuleGUID</key>
-						<string>9324D7C9135E710100CFAEDF</string>
+						<string>9324D994135FAED900CFAEDF</string>
 						<key>PBXProjectModuleLabel</key>
 						<string>LearnPassageViewController.m</string>
 						<key>_historyCapacity</key>
 						<integer>0</integer>
 						<key>bookmark</key>
-						<string>9324D7E8135E99B300CFAEDF</string>
+						<string>9324D9C4135FB77500CFAEDF</string>
 						<key>history</key>
 						<array>
-							<string>9324D7C1135E6CD800CFAEDF</string>
+							<string>9324D98D135FAAD400CFAEDF</string>
 						</array>
 					</dict>
 					<key>SplitCount</key>
@@ -236,6 +236,46 @@
 				<false/>
 				<key>RubberWindowFrame</key>
 				<string>357 99 826 679 0 0 1280 778 </string>
+			</dict>
+		</dict>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>9324D996135FAED900CFAEDF</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>LearnPassageViewController.h</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>9324D997135FAED900CFAEDF</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>LearnPassageViewController.h</string>
+						<key>_historyCapacity</key>
+						<integer>0</integer>
+						<key>bookmark</key>
+						<string>9324D9C5135FB77500CFAEDF</string>
+						<key>history</key>
+						<array>
+							<string>9324D98E135FAAD600CFAEDF</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {826, 638}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>57 94 826 679 0 0 1280 778 </string>
 			</dict>
 		</dict>
 	</array>
@@ -323,7 +363,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 0}, {217, 547}}</string>
+							<string>{{0, 147}, {217, 547}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -370,7 +410,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>9324D7E7135E99B300CFAEDF</string>
+										<string>9324D9C3135FB77500CFAEDF</string>
 										<key>history</key>
 										<array>
 											<string>93B5171612727FF20028EECE</string>
@@ -407,7 +447,6 @@
 											<string>936586211349C367000D3679</string>
 											<string>936586E51349D819000D3679</string>
 											<string>936586E61349D819000D3679</string>
-											<string>9375A893134BCD8800F78998</string>
 											<string>9375A894134BCD8800F78998</string>
 											<string>9375A895134BCD8800F78998</string>
 											<string>9375A896134BCD8800F78998</string>
@@ -417,8 +456,9 @@
 											<string>9375A89A134BCD8800F78998</string>
 											<string>9375A89C134BCD8800F78998</string>
 											<string>9375A98F134F5A0400F78998</string>
-											<string>9324D704135E52DD00CFAEDF</string>
-											<string>9324D7C6135E710100CFAEDF</string>
+											<string>9324D98F135FAED900CFAEDF</string>
+											<string>9324D990135FAED900CFAEDF</string>
+											<string>9324D991135FAED900CFAEDF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -616,11 +656,15 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
+		<string>9324D9C6135FB77500CFAEDF</string>
+		<string>9324D9C7135FB77500CFAEDF</string>
+		<string>1C530D57069F1CE1000CFCEE</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>9383CA62126E690100D52DE1</string>
-		<string>1C78EAAD065D492600B07095</string>
 		<string>/Users/geoffrey2/personal/projects/bible-memory-ipad/bible-memory-ipad.xcodeproj</string>
-		<string>9324D7C8135E710100CFAEDF</string>
+		<string>9324D996135FAED900CFAEDF</string>
+		<string>9324D993135FAED900CFAEDF</string>
+		<string>1C78EAAD065D492600B07095</string>
 	</array>
 	<key>WindowString</key>
 	<string>45 153 1021 606 0 0 1280 778 </string>
@@ -918,8 +962,8 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C530D57069F1CE1000CFCEE</string>
-				<string>936586A21349D325000D3679</string>
-				<string>936586A31349D325000D3679</string>
+				<string>9324D91E135F98FA00CFAEDF</string>
+				<string>9324D91F135F98FA00CFAEDF</string>
 				<string>1CDD528C0622207200134675</string>
 				<string>1CD0528E0623707200166675</string>
 			</array>
