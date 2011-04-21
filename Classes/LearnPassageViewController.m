@@ -49,8 +49,11 @@ NSString *wordUnitName = @"word";
 // For grouping the controls that manipulate visibility of the passage text.
 @property (nonatomic, retain) NSArray *passageControls;
 
+// The previous first-letter range. (For undo.)
+@property (nonatomic, assign) NSRange previousFirstLetterRange;
+
 // The previous showable range. (For undo.)
-@property (nonatomic, assign) NSRange previousRange;
+@property (nonatomic, assign) NSRange previousShowableRange;
 
 // For repeating the current control.
 @property (nonatomic, retain) NSTimer *repeatingTimer;
@@ -64,23 +67,18 @@ NSString *wordUnitName = @"word";
 // Whether the showable text is visible.
 @property (nonatomic, assign) BOOL showShowableText;
 
-// Add the next clause in the passage to the showable text. Include whitespace before the clause. By "clause" we mean the next set of 3+ words ending in a punctuation mark. However, if part of a clause is already showing, add that entire clause (so less than 3 words may be added).
-// I suppose by clause I really mean the text (including whitespace) between two punctuation marks, plus the ending punctuation mark. Revise descriptions once I figure out if I really want a 3-word minimum.
-- (void)addClause;
-//- (void)addClause:(BOOL)firstLetterMode;
+// Add the next clause from the passage's text to the range. The new range is returned. By "next clause," we mean up to the next clause-ending punctuation mark. (E.g., a semi-colon, but not an apostraphe.) Note that a comma-delimited list will be several clauses (e.g., in "love, joy, peace, patience and kindness," the first clause is simply "love,".) I'm not sure how to easily distinguish between a list and a real clause. 
+- (NSRange)addClause:(NSRange)range;
 
 // Add the next sentence in the passage to the showable text. Include whitespace before the sentence. If part of a sentence is already showing, add that sentence.
 - (void)addSentence;
 //- (void)addSentence:(BOOL)firstLetterMode;
 
-// Add the text unit from the passage text. If not in first-letter mode, add to the regular range. Else, add to the first-letter range.
+// Add the next text unit from the passage text. If not in first-letter mode, add to the regular range. Else, add to the first-letter range.
 - (void)addTextUnit:(NSString *)textUnit firstLetter:(BOOL)firstLetterMode;
 
-// Add the next word from the passage's text. If in first-letter mode, then add the first letter instead of the entire word. Either way, include whitespace before the word and punctuation after.
-// I could let addTextUnit handle the first-letter-mode stuff. Just return a range here and move part to addTextUnit.
-- (void)addWord:(BOOL)firstLetterMode;
 // Add the next word from the passage's text to the range. The new range is returned.
-//- (NSRange)addWord:(NSRange)range;
+- (NSRange)addWord:(NSRange)range;
 
 // Return the working text by combining the showable range and the first-letter range.
 - (NSString *)assembleWorkingText;
@@ -88,35 +86,30 @@ NSString *wordUnitName = @"word";
 // Remove all letters from the string, except for first letters. (So retain whitespace, punctuation, etc.)
 - (NSString *)reduceStringToFirstLetters:(NSString *)string;
 
-// Remove the last clause from the showable text. (See addClause for our definition of a clause.) If only part of a clause is showing, then hide that clause.
-- (void)removeClause;
-
-// Remove the first letters of the last sentence from the showable text. If part of a sentence is showing, then remove that sentence instead.
-- (void)removeFirstLetterSentence;
-
-// Remove the first letter of the last word from the showable text. Also remove any whitespace before the word. 
-- (void)removeFirstLetterWord;
+// Remove the last clause from the range. The new range is returned. See addClause: for our definition of a clause. If only part of a clause is showing, then that becomes the clause to remove. 
+- (NSRange)removeClause:(NSRange)range;
 
 // Remove the last sentence from the showable text. If part of a sentence is showing, then remove that sentence.
+// description needs update
 - (void)removeSentence;
 
-// Remove the text unit. If not in first-letter mode, remove from the showable range. Else, remove from the first-letter range (and text).
-- (void)removeTextUnit:(NSString *)textUnit firstLetter:(BOOL)firstLetterMode;
-
-// Remove the last word from the showable text. Also remove any whitespace before the word. 
-//- (void)removeWord;
+// Remove the text unit from the showable range. However, if the first-letter range is greater than the showable range, then remove from the first-letter range (and first-letter text) instead.
+- (void)removeTextUnit:(NSString *)textUnit;
 
 // Remove the last word from the range. The new range is returned.
 - (NSRange)removeWord:(NSRange)range;
 
-// Start the current repeating timer, if any.
-- (void)startRepeatingTimer;
+// Start the current repeating timer, if any. The repeating timer is not necessarily the timer passed in.
+- (void)startRepeatingTimer:(NSTimer *)theTimer;
 
 // Change the section/word controls so they look distinct from the standard round-rectangle button. These controls are used by the user differently than a standard UIButton.
 - (void)stylizePassageControls;
 
 // Enable/disable passage controls based on context. Change control labels based on context.
 - (void)updateControlAppearance;
+
+// Update the first-letter text to span the new range.
+- (void)updateFirstLetterRangeAndText:(NSRange)newRange;
 
 // Update what's seen. For example, in response to the showable text changing.
 - (void)updateView;
@@ -125,105 +118,27 @@ NSString *wordUnitName = @"word";
 
 @implementation LearnPassageViewController
 
-@synthesize addAllButton, addClauseButton, addFirstLetterWordButton, addFirstLetterSentenceButton, addSentenceButton, addWordButton, hideOrShowReferenceTextButton, hideOrShowTextButton, referenceTextView, removeAllButton, removeAllFirstLettersButton, removeClauseButton, removeFirstLetterSentenceButton, removeFirstLetterWordButton, removeSentenceButton, removeWordButton, undoRemoveAllFirstLettersButton, workingTextView;
-@synthesize firstLetterRange, firstLetterText, passage, passageControls, previousRange, repeatingTimer, showableRange, showReferenceText, showShowableText;
+@synthesize addClauseButton, addFirstLetterClauseButton, addFirstLetterWordButton, addFirstLetterSentenceButton, addSentenceButton, addWordButton, hideOrShowReferenceTextButton, hideOrShowTextButton, referenceTextView, removeAllButton, removeAllFirstLettersButton, removeClauseButton, removeFirstLetterSentenceButton, removeFirstLetterWordButton, removeSentenceButton, removeWordButton, undoRemoveAllButton, undoRemoveAllFirstLettersButton, workingTextView;
+@synthesize firstLetterRange, firstLetterText, passage, passageControls, previousFirstLetterRange, previousShowableRange, repeatingTimer, showableRange, showReferenceText, showShowableText;
 
-- (IBAction)addAllText:(id)sender {
+- (NSRange)addClause:(NSRange)range {
 
-	self.showableRange = self.previousRange;
-	[self updateView];
-}
-
-- (void)addClause {
-
-	// Find the end of the previous clause. Then, count forward 3 words. From the start of the third word, search for the next punctuation mark. That's the end of the clause to show.
+	// Find the next clause-ending punctuation mark.
+	NSString *text = self.passage.text;
+	NSUInteger location = range.length;
+	NSUInteger length = text.length - location;
+	NSCharacterSet *clauseCharacterSet = [NSCharacterSet characterSetWithCharactersInString:clauseCharactersString];
+	NSRange endOfNextClauseRange = [text rangeOfCharacterFromSet:clauseCharacterSet options:0 range:NSMakeRange(location, length)];
 	
-	// Do this only if not at end of passage text yet.
-	NSString *passageText = self.passage.text;
-	BOOL showableTextIsAtEndOfPassage = NO;
-	if (self.showableRange.location + self.showableRange.length == passageText.length) {
-		showableTextIsAtEndOfPassage = YES;
+	// If found, show up to (and including) that. Else, show up to the end.
+	NSUInteger lengthOfShowableText;
+	if (endOfNextClauseRange.location != NSNotFound) {
+		lengthOfShowableText = endOfNextClauseRange.location - range.location + 1;
+	} else {
+		lengthOfShowableText = text.length - range.location;
 	}
-	if (!showableTextIsAtEndOfPassage) {
-	
-		// Find the end of the previous clause in the showable text. The end is a punctuation mark. If found, use that. Else, assume it's right before the showable text.
-		NSCharacterSet *punctuationCharacterSet = [NSCharacterSet characterSetWithCharactersInString:clauseCharactersString];
-		NSRange endOfPreviousClauseRange = [passageText rangeOfCharacterFromSet:punctuationCharacterSet options:NSBackwardsSearch range:self.showableRange];
-		NSInteger endOfPreviousClause;
-		if (endOfPreviousClauseRange.location != NSNotFound) {
-			endOfPreviousClause = endOfPreviousClauseRange.location;
-		} else {
-			endOfPreviousClause = -1;
-		}
-
-		// From the end of the clause, go forward three words. Keep the index for the start of the third word.
-		
-		// Search for non-whitespace for the start of the first word.
-		NSUInteger location = endOfPreviousClause + 1;
-		NSUInteger length = passageText.length - location;
-		NSCharacterSet *whitespaceAndNewlineCharacterSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-		NSCharacterSet *nonWhitespaceCharacterSet = [whitespaceAndNewlineCharacterSet invertedSet];
-		NSRange startOfWordRange = [passageText rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:0 range:NSMakeRange(location, length)];
-
-		// Search alternately for whitespace and then non-whitespace to find the start of the second and third words.
-		BOOL addToEndOfPassage = NO;
-		if (startOfWordRange.location != NSNotFound) {
-// skipping this for now, so clauses can be 1 word. 3-word minimum was weird when adding more than a sentence, at least. if I don't have a minimum, then I also don't have to search backward in the beginning? i won't even have to search for whitespace or non-whitespace; just punctuation. actually, I could search first for punctuation, and then if it's not a comma, that's it. if it's a comma, we could do the rest.
-//			for (int i = 0; i < 2; i++) {
-//				
-//				// Search for whitespace.
-//				location = startOfWordRange.location;
-//				length = self.passageText.length - location;
-//				NSRange startOfWhitespaceRange = [self.passageText rangeOfCharacterFromSet:whitespaceAndNewlineCharacterSet options:0 range:NSMakeRange(location, length)];
-//				
-//				// If not found, then we add up to the end of the passage.
-//				if (startOfWhitespaceRange.location == NSNotFound) {
-//					addToEndOfPassage = YES;
-//					break;
-//				}
-//				
-//				// Search for non-whitespace for the start of a word.
-//				location = startOfWhitespaceRange.location;
-//				length = self.passageText.length - location;
-//				startOfWordRange = [self.passageText rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:0 range:NSMakeRange(location, length)];
-//				
-//				// If not found, then we add up to the end of the passage.
-//				if (startOfWordRange.location == NSNotFound) {
-//					addToEndOfPassage = YES;
-//					break;
-//				}
-//			}
-		} else {
-			addToEndOfPassage = YES;
-		}
-		
-		// If there's still more to search, then search for the next punctuation mark, starting from the start of the third word.
-		NSUInteger endOfClause;
-		if (!addToEndOfPassage) {
-			location = startOfWordRange.location;
-			length = passageText.length - location;
-			NSRange nextPunctuationRange = [passageText rangeOfCharacterFromSet:punctuationCharacterSet options:0 range:NSMakeRange(location, length)];
-			if (nextPunctuationRange.location != NSNotFound) {
-				endOfClause = nextPunctuationRange.location;
-			} else {
-				addToEndOfPassage = YES;
-			}
-		}
-		
-		// If ultimately no punctuation was found, then add up to the end of the passage.
-		if (addToEndOfPassage) {
-			endOfClause = passageText.length - 1;
-		}
-
-		NSUInteger lengthOfShowableText = endOfClause - self.showableRange.location + 1;
-		self.showableRange = NSMakeRange(self.showableRange.location, lengthOfShowableText);
-		[self updateView];
-	}
-	
-	// If there's nothing more to add, then stop the timer.
-	else {
-		[self stopARepeatingMethod:self];
-	}
+	range.length = lengthOfShowableText;
+	return range;
 }
 
 - (void)addSentence {
@@ -259,55 +174,48 @@ NSString *wordUnitName = @"word";
 
 - (void)addTextUnit:(NSString *)textUnit firstLetter:(BOOL)firstLetterMode {
 	
-	// See if there's something left to add. If so, add the text unit. Else, stop any repeating timer.
-	NSString *text = self.passage.text;
-	BOOL stopTimer = NO;
 	NSRange aRange;
 	if (!firstLetterMode) {
 		aRange = self.showableRange;
 	} else {
 		aRange = self.firstLetterRange;
 	}
-	if (NSMaxRange(aRange) != text.length) {
-	
-		if ([textUnit isEqualToString:clauseUnitName]) {
-			NSLog(@"add clause");
-		} else if ([textUnit isEqualToString:sentenceUnitName]) {
-			NSLog(@"add sentence");
-		} else if ([textUnit isEqualToString:wordUnitName]) {
-			[self addWord:firstLetterMode];
-		} else {
-			NSLog(@"Warning: Text unit not found: %@", textUnit);
-		}
-		[self updateView];
-		
-		// If the new range is at the end of the passage, we can also stop the timer.
-		if (NSMaxRange(aRange) == text.length) {
-			stopTimer = YES;
-		}
+	if ([textUnit isEqualToString:clauseUnitName]) {
+		aRange = [self addClause:aRange];
+	} else if ([textUnit isEqualToString:sentenceUnitName]) {
+		//aRange = [self addSentence:aRange];
+	} else if ([textUnit isEqualToString:wordUnitName]) {
+		aRange = [self addWord:aRange];
 	} else {
-		stopTimer = YES;
+		NSLog(@"Warning: Text unit not found: %@", textUnit);
 	}
 	
-	if (stopTimer) {
-		[self stopARepeatingMethod:self];
+	if (!firstLetterMode) {
+		self.showableRange = aRange;
+		
+		// If the first-letter range is less than the showable range, then increase the first-letter range.
+		if (self.firstLetterRange.length < self.showableRange.length) {
+			[self updateFirstLetterRangeAndText:self.showableRange];
+		} 
+	} else {
+		[self updateFirstLetterRangeAndText:aRange];
 	}
+	
+	[self updateView];
+	
+	// If there's nothing left to add, then stop any repeating timer. Words can be added until the end of the passage; ditto for first-letter words.
+	if (NSMaxRange(aRange) == self.passage.text.length) {
+		[self stopARepeatingMethod:self];
+	} 
 }
 
-- (void)addWord:(BOOL)firstLetterMode {
-
-	NSRange aRange;
-	if (!firstLetterMode) {
-		aRange = self.showableRange;
-	} else {
-		aRange = self.firstLetterRange;
-	}
+- (NSRange)addWord:(NSRange)range {
 
 	// Scan forward from the end of the range. Find the start of the next word by scanning past whitespace. Then, find the end of the word/punctuation by scanning up to whitespace and going back one.
 	
 	// Scan past whitespace.
 	NSCharacterSet *whitespaceCharacterSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-	NSString *sourceText = [self.passage.text substringFromIndex:NSMaxRange(aRange)];
+	NSString *sourceText = [self.passage.text substringFromIndex:NSMaxRange(range)];
 	NSScanner *scanner = [NSScanner scannerWithString:sourceText];
 	[scanner setCharactersToBeSkipped:nil];
 	[scanner scanCharactersFromSet:whitespaceCharacterSet intoString:NULL];
@@ -323,53 +231,10 @@ NSString *wordUnitName = @"word";
 		endingLocation = [scanner scanLocation];
 	}
 
-	NSUInteger newLength = endingLocation + NSMaxRange(aRange) + 1;
-	aRange.length = newLength;
-	if (!firstLetterMode) {
-		self.showableRange = aRange;
-	} else {
-		
-		// Get range of added text. Reduce that to first letters. Append to first-letter text.
-		NSUInteger location = NSMaxRange(self.firstLetterRange);
-		NSUInteger length = NSMaxRange(aRange) - location;
-		NSRange addedTextRange = NSMakeRange(location, length);
-		NSString *firstLetterTextToAdd = [self reduceStringToFirstLetters:[self.passage.text substringWithRange:addedTextRange]];
-		self.firstLetterText = [self.firstLetterText stringByAppendingString:firstLetterTextToAdd];
-		self.firstLetterRange = aRange;
-	}
+	NSUInteger newLength = endingLocation + NSMaxRange(range) + 1;
+	range.length = newLength;
+	return range;
 }
-
-/*
-- (void)addWordFromText:(NSString *)text toRange:(NSRange *)rangePointer {
-
-	// Scan forward from the end of the range text. Find the start of the next word by looking for non-whitespace. Then, find the end of the word by looking for whitespace and going back one.
-	
-	//NSString *passageText = self.passage.text;
-		
-	// Scan starts from end of range text = location = (index of last range char in passage text) + 1 = [(theRange length) - (theRange location) - 1] + 1 = length - location.
-	NSUInteger location = rangePointer->length - rangePointer->location;
-	
-	// Scan ends at end of passage text. Length = (index of last char) - location + 1 = (index of last char) + 1 - location = (passage text length) - location.
-	NSUInteger length = text.length - location;
-	
-	NSCharacterSet *nonWhitespaceCharacterSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] invertedSet];
-	NSRange startOfNextWordRange = [text rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:0 range:NSMakeRange(location, length)];
-
-	location = startOfNextWordRange.location;
-	length = text.length - location;
-	NSRange startOfNextNextWhitespaceRange = [text rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] options:0 range:NSMakeRange(location, length)];
-	
-	// Get new range. The end of the range is just before the whitespace found. However, if the added word is the last word, then no whitespace would have been found. In that case, the end of the range is the end of the passage text.
-	NSUInteger endingLocation;
-	if (startOfNextNextWhitespaceRange.location != NSNotFound) {
-		endingLocation = startOfNextNextWhitespaceRange.location - 1;
-	} else {
-		endingLocation = text.length - 1;
-	}
-	NSUInteger lengthOfShowableText = endingLocation - rangePointer->location + 1;
-	rangePointer->length = lengthOfShowableText;
-}
-*/
 
 - (NSString *)assembleWorkingText {
 
@@ -412,7 +277,7 @@ NSString *wordUnitName = @"word";
 
 - (void)dealloc {
 	
-	NSArray *anArray = [NSArray arrayWithObjects:addAllButton, addClauseButton, addFirstLetterWordButton, addSentenceButton, addWordButton, firstLetterText, hideOrShowReferenceTextButton, hideOrShowTextButton, passage, passageControls, referenceTextView, removeAllButton, removeClauseButton, removeSentenceButton, removeWordButton, repeatingTimer, workingTextView, nil];
+	NSArray *anArray = [NSArray arrayWithObjects: addClauseButton, addFirstLetterClauseButton, addFirstLetterWordButton, addSentenceButton, addWordButton, firstLetterText, hideOrShowReferenceTextButton, hideOrShowTextButton, passage, passageControls, referenceTextView, removeAllButton, removeClauseButton, removeSentenceButton, removeWordButton, repeatingTimer, undoRemoveAllButton, workingTextView, nil];
 	for (NSObject *anObject in anArray) {
 		[anObject release];
 	}
@@ -503,49 +368,33 @@ NSString *wordUnitName = @"word";
 
 - (IBAction)removeAllText:(id)sender {
 	
-	self.previousRange = self.showableRange;
+	self.previousShowableRange = self.showableRange;
 	self.showableRange = NSMakeRange(self.showableRange.location, 0);
+	
+	self.previousFirstLetterRange = self.firstLetterRange;
+	[self updateFirstLetterRangeAndText:self.showableRange];
+	
 	[self updateView];
 }
 
-- (void)removeClause {
+- (NSRange)removeClause:(NSRange)range {
 
-	// I'm going to do this first assuming there's no minimum for a clause, so it can be just one word. If I want the minimum later, I'll look again at LearnTextViewController.
+	// Find the end of the previous clause. (Start at one character from the end and scan backwards.) 
+	NSUInteger location = range.location;
+	NSUInteger length = range.length - 1;
+	NSCharacterSet *clauseCharacterSet = [NSCharacterSet characterSetWithCharactersInString:clauseCharactersString];
+	NSString *showableText = [self.passage.text substringWithRange:range];
+	NSRange endOfPreviousClauseRange = [showableText rangeOfCharacterFromSet:clauseCharacterSet options:NSBackwardsSearch range:NSMakeRange(location, length)];
 	
-	// Remove something only if there's something to remove. Else, stop any repeating timer.
-	BOOL stopTimer = NO;
-	if (self.showableRange.length != 0) {
-	
-		// Find the end of the previous clause. (Start at one character from the end and scan backwards.) 
-		NSUInteger location = self.showableRange.location;
-		NSUInteger length = self.showableRange.length - 1;
-		NSCharacterSet *punctuationCharacterSet = [NSCharacterSet characterSetWithCharactersInString:clauseCharactersString];
-		NSString *showableText = [self.passage.text substringWithRange:self.showableRange];
-		NSRange endOfPreviousClauseRange = [showableText rangeOfCharacterFromSet:punctuationCharacterSet options:NSBackwardsSearch range:NSMakeRange(location, length)];
-		
-		// If the end of the previous clause was found, show up to that. Else, show up to the start (i.e., nothing).
-		NSUInteger lengthOfShowableText;
-		if (endOfPreviousClauseRange.location != NSNotFound) {
-			lengthOfShowableText = endOfPreviousClauseRange.location - self.showableRange.location + 1;
-		} else {
-			lengthOfShowableText = 0;
-			stopTimer = YES;
-		}
-		self.showableRange = NSMakeRange(self.showableRange.location, lengthOfShowableText);
-		[self updateView];
+	// If found, show up to that. Else, show up to the start (i.e., nothing).
+	NSUInteger lengthOfShowableText;
+	if (endOfPreviousClauseRange.location != NSNotFound) {
+		lengthOfShowableText = endOfPreviousClauseRange.location - range.location + 1;
 	} else {
-		stopTimer = YES;
+		lengthOfShowableText = 0;
 	}
-	
-	if (stopTimer) {
-		[self stopARepeatingMethod:self];
-	}
-}
-
-- (void)removeFirstLetterSentence {
-}
-
-- (void)removeFirstLetterWord {
+	range.length = lengthOfShowableText;
+	return range;
 }
 
 - (void)removeSentence {
@@ -580,56 +429,107 @@ NSString *wordUnitName = @"word";
 	}
 }
 
+// Remove the text unit from the showable range. However, if the first-letter range is greater than the showable range, then remove from the first-letter range (and first-letter text) instead.
+
+- (void)removeTextUnit:(NSString *)textUnit {
+
+	NSRange aRange;
+	BOOL firstLetterMode;
+	if (self.firstLetterRange.length > self.showableRange.length) {
+		aRange = self.firstLetterRange;
+		firstLetterMode = YES;
+	} else {
+		aRange = self.showableRange;
+		firstLetterMode = NO;
+	}
+	
+	if ([textUnit isEqualToString:clauseUnitName]) {
+		aRange = [self removeClause:aRange];
+	} else if ([textUnit isEqualToString:sentenceUnitName]) {
+		NSLog(@"remove sentence");
+		//aRange = [self removeSentence:aRange];
+	} else if ([textUnit isEqualToString:wordUnitName]) {
+		aRange = [self removeWord:aRange];
+	} else {
+		NSLog(@"Warning: Text unit not found: %@", textUnit);
+	}
+	
+	// If the showable range was reduced, then make the first-letter range match that.
+	if (!firstLetterMode) {
+		
+		self.showableRange = aRange;
+		[self updateFirstLetterRangeAndText:aRange];
+	} 
+	
+	// If the first-letter range was reduced, then that range may now be less than the showable range. (E.g., a clause shows some full words and some first letters, and the clause is removed.) In that case, make the showable range match.
+	else {
+		
+		[self updateFirstLetterRangeAndText:aRange];
+		if (self.firstLetterRange.length < self.showableRange.length) {
+			self.showableRange = aRange;
+		} 
+	}
+	[self updateView];
+	
+	// If there's nothing left to remove, then stop any repeating timer.
+	if (self.firstLetterRange.length == 0) {
+		[self stopARepeatingMethod:self];
+	}
+}
+
+// old version; deprecated
+/*
 - (void)removeTextUnit:(NSString *)textUnit firstLetter:(BOOL)firstLetterMode {
 
-	// See if there's something left to remove. If so, remove the text unit. Else, stop any repeating timer.
-	NSString *text = self.passage.text;
-	BOOL stopTimer = NO;
 	NSRange aRange;
 	if (!firstLetterMode) {
 		aRange = self.showableRange;
 	} else {
 		aRange = self.firstLetterRange;
 	}
-	if (aRange.length != 0) {
 	
-		if ([textUnit isEqualToString:clauseUnitName]) {
-			NSLog(@"remove clause");
-		} else if ([textUnit isEqualToString:sentenceUnitName]) {
-			NSLog(@"remove sentence");
-		} else if ([textUnit isEqualToString:wordUnitName]) {
-			aRange = [self removeWord:aRange];
-		} else {
-			NSLog(@"Warning: Text unit not found: %@", textUnit);
-		}
-		
-		if (!firstLetterMode) {
-			self.showableRange = aRange;
-		} else {
-			
-			// Get range of removed text. Reduce that to first letters. Remove that amount from the end of the first-letter text.
-			NSUInteger location = NSMaxRange(aRange);
-			NSUInteger length = NSMaxRange(self.firstLetterRange) - location;
-			NSRange removedTextRange = NSMakeRange(location, length);
-			NSString *firstLetterTextToRemove = [self reduceStringToFirstLetters:[text substringWithRange:removedTextRange]];
-			NSUInteger startingLocationOfFirstLetterTextToRemove = self.firstLetterText.length - firstLetterTextToRemove.length; 
-			self.firstLetterText = [self.firstLetterText substringToIndex:startingLocationOfFirstLetterTextToRemove];
-			self.firstLetterRange = aRange;
-		}
-		[self updateView];
-		
-		// If the new range is at the start of the passage, we can also stop the timer.
-		if (aRange.length == 0) {
-			stopTimer = YES;
-		}
+	if ([textUnit isEqualToString:clauseUnitName]) {
+		aRange = [self removeClause:aRange];
+	} else if ([textUnit isEqualToString:sentenceUnitName]) {
+		NSLog(@"remove sentence");
+		//aRange = [self removeSentence:aRange];
+	} else if ([textUnit isEqualToString:wordUnitName]) {
+		aRange = [self removeWord:aRange];
 	} else {
-		stopTimer = YES;
+		NSLog(@"Warning: Text unit not found: %@", textUnit);
 	}
 	
+	if (!firstLetterMode) {
+		
+		// If first letters were not already showing, then don't show any for the removed text unit.
+		if (self.firstLetterRange.length <= self.showableRange.length) {
+			[self updateFirstLetterRangeAndText:aRange];
+		}
+		self.showableRange = aRange;
+		
+		
+	} else {
+	
+		// The first-letter range should be at least as large as the showable range. E.g., if the rest of a sentence is shown in first letters, and then the first letters are removed for the entire sentence, then this would apply.
+		if (aRange.length < self.showableRange.length) {
+			aRange = self.showableRange;
+		} 
+		[self updateFirstLetterRangeAndText:aRange];
+	}
+	[self updateView];
+	
+	// If there's nothing left to remove, then stop any repeating timer. Words can be removed until the start of the passage, but first-letter words can be removed only until the end of the showable text.
+	BOOL stopTimer = NO;
+	if ( (!firstLetterMode) && (self.showableRange.length == 0) ) {
+		stopTimer = YES;
+	} else if ( (firstLetterMode) && (self.firstLetterRange.length <= self.showableRange.length) ) {
+		stopTimer = YES;
+	}
 	if (stopTimer) {
 		[self stopARepeatingMethod:self];
 	}
 }
+*/
 
 - (NSRange)removeWord:(NSRange)range {
 
@@ -657,51 +557,9 @@ NSString *wordUnitName = @"word";
 		lengthOfShowableText = 0;
 	}
 
-	range = NSMakeRange(range.location, lengthOfShowableText);
+	range.length = lengthOfShowableText;
 	return range;
 }
-
-/*
-- (void)removeWord {
-
-	// Find the end of the previous word, and remove everything after that in the showable text. We assume the end of the showable text is a letter or punctuation, i.e., non-whitespace. So we'll scan backwards to the last whitespace, then backwards from there to the next non-whitespace.
-	
-	// Do this only if there is showable text.
-	if (self.showableRange.length != 0) {
-		NSUInteger lengthOfShowableText;
-			
-		// Find last whitespace.
-		// WARNING: do I want to search the passage text or the showable text? can check once I have showable text that starts after the beginning of the passage text.
-		NSString *passageText = self.passage.text;
-		NSRange lastWhitespaceRange = [passageText rangeOfCharacterFromSet:[NSCharacterSet whitespaceAndNewlineCharacterSet] options:NSBackwardsSearch range:self.showableRange];
-		
-		// If whitespace was found, then find the next non-whitespace, scanning backwards. Else, only the first word was showable, so show nothing.
-		if (lastWhitespaceRange.location != NSNotFound) {
-			NSCharacterSet *nonWhitespaceCharacterSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] invertedSet];
-			NSUInteger lengthOfShowableRangeToLastWhitespace = lastWhitespaceRange.location - self.showableRange.location + 1;
-			NSRange showableRangeUpToLastWhitespace = NSMakeRange(self.showableRange.location, lengthOfShowableRangeToLastWhitespace);
-			NSRange endOfSecondToLastWordRange = [passageText rangeOfCharacterFromSet:nonWhitespaceCharacterSet options:NSBackwardsSearch range:showableRangeUpToLastWhitespace];
-			
-			// If the end of the previous word was found, show up to that. Else, only the first word was showable, so show nothing.
-			if (endOfSecondToLastWordRange.location != NSNotFound) {
-				lengthOfShowableText = endOfSecondToLastWordRange.location - self.showableRange.location + 1;
-			} else {
-				lengthOfShowableText = 0;
-			}
-		} else {
-			lengthOfShowableText = 0;
-		}
-
-		self.showableRange = NSMakeRange(self.showableRange.location, lengthOfShowableText);
-		[self updateView];
-	}
-	
-	// If there's nothing to remove, then stop the timer.
-	else {
-		[self stopARepeatingMethod:self];
-	}
-}
-*/
 
 - (IBAction)repeatAMethodBasedOnSender:(id)sender {
 	
@@ -710,29 +568,38 @@ NSString *wordUnitName = @"word";
 	NSString *textUnitName;
 	BOOL firstLetter;
 	if (sender == self.addClauseButton) {
-		aSelector = @selector(addClause);
+		aSelector = @selector(addTextUnit:firstLetter:);
+		textUnitName = clauseUnitName;
+		firstLetter = NO;
 	} else if (sender == self.addSentenceButton) {
-		aSelector = @selector(addSentence);
+		aSelector = @selector(addTextUnit:firstLetter:);
+		textUnitName = sentenceUnitName;
+		firstLetter = NO;
 	} else if (sender == self.addWordButton) {
 		aSelector = @selector(addTextUnit:firstLetter:);
 		textUnitName = wordUnitName;
 		firstLetter = NO;
 	} else if (sender == self.removeClauseButton) {
-		aSelector = @selector(removeClause);
+		aSelector = @selector(removeTextUnit:);
+		textUnitName = clauseUnitName;
 	} else if (sender == self.removeSentenceButton) {
-		aSelector = @selector(removeSentence);
+		aSelector = @selector(removeTextUnit:);
+		textUnitName = sentenceUnitName;
 	} else if (sender == self.removeWordButton) {
-		aSelector = @selector(removeTextUnit:firstLetter:);
+		aSelector = @selector(removeTextUnit:);
 		textUnitName = wordUnitName;
-		firstLetter = NO;
+	} else if (sender == self.addFirstLetterClauseButton) {
+		aSelector = @selector(addTextUnit:firstLetter:);
+		textUnitName = clauseUnitName;
+		firstLetter = YES;
 	} else if (sender == self.addFirstLetterWordButton) {
 		aSelector = @selector(addTextUnit:firstLetter:);
 		textUnitName = wordUnitName;
 		firstLetter = YES;
-	} else if (sender == self.removeFirstLetterWordButton) {
-		aSelector = @selector(removeTextUnit:firstLetter:);
-		textUnitName = wordUnitName;
-		firstLetter = YES;
+	//} else if (sender == self.removeFirstLetterWordButton) {
+//		aSelector = @selector(removeTextUnit:firstLetter:);
+//		textUnitName = wordUnitName;
+//		firstLetter = YES;
 	} else {
 		NSLog(@"Warning from repeatAMethodBasedOnSender: Sender is unknown.");
 	}
@@ -743,25 +610,28 @@ NSString *wordUnitName = @"word";
 	[invocation setTarget:self];
 	[invocation setSelector:aSelector];
 	[invocation setArgument:&textUnitName atIndex:2];
-	[invocation setArgument:&firstLetter atIndex:3];
+	if (aSelector == @selector(addTextUnit:firstLetter:) ) {
+		[invocation setArgument:&firstLetter atIndex:3];
+	}
 			
-	// Invoke the method once.
-	[invocation invoke];
-
 	// Make a timer to invoke the method repeatedly.
 	NSTimer *aRepeatingTimer = [NSTimer timerWithTimeInterval:0.1 invocation:invocation repeats:YES];
 	self.repeatingTimer = aRepeatingTimer;
 	
+	// Invoke the method once.
+	[invocation invoke];
+	
 	// Wait for the initial delay, then start the repeating timer.
-	[NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(startRepeatingTimer) userInfo:nil repeats:NO];
+	[NSTimer scheduledTimerWithTimeInterval:0.6 target:self selector:@selector(startRepeatingTimer:) userInfo:nil repeats:NO];
 }
 
-- (void)startRepeatingTimer {
+- (void)startRepeatingTimer:(NSTimer *)theTimer {
 
+	// The repeating timer is self.repeatingTimer, not theTimer.
 	if (self.repeatingTimer != nil) {
 		NSRunLoop *runLoop = [NSRunLoop currentRunLoop];
 		[runLoop addTimer:self.repeatingTimer forMode:NSDefaultRunLoopMode];
-	}
+	} 
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -774,7 +644,6 @@ NSString *wordUnitName = @"word";
 
 	[self.repeatingTimer invalidate];
 	self.repeatingTimer = nil;
-	//NSLog(@"timer stopped");
 }
 
 - (void)stylizePassageControls {
@@ -809,6 +678,13 @@ NSString *wordUnitName = @"word";
 - (IBAction)undoRemoveAllFirstLetters:(id)sender {
 }
 
+- (IBAction)undoRemoveAllText:(id)sender {
+
+	self.showableRange = self.previousShowableRange;
+	[self updateFirstLetterRangeAndText:self.previousFirstLetterRange];
+	[self updateView];
+}
+
 - (void)updateControlAppearance {
 
 	for (UIButton *aButton in self.passageControls) {
@@ -823,40 +699,73 @@ NSString *wordUnitName = @"word";
 	}
 	
 	// Toggle hide/show text control label.
+	//try without this button for now
+	self.hideOrShowTextButton.hidden = YES;
 	if (self.showShowableText) {
 		[self.hideOrShowTextButton setTitle:hideTextLabel forState:UIControlStateNormal];
 	} else {
 		[self.hideOrShowTextButton setTitle:showTextLabel forState:UIControlStateNormal];
 	}
 	
-	// If nothing in a range, disable "subtract" controls.
-	if (self.showableRange.length == 0) {
+	// If there is nothing to remove, disable "subtract" controls.
+	if (self.firstLetterRange.length == 0) {
 		self.removeAllButton.enabled = NO;
 		self.removeClauseButton.enabled = NO;
 		self.removeSentenceButton.enabled = NO;
 		self.removeWordButton.enabled = NO;
 	}
-	if (self.firstLetterRange.length == 0) {
-		self.removeFirstLetterWordButton.enabled = NO;
-	}
 	
-	// If everything is in a range, disable "add" controls.
-	if (self.passage.text.length == self.showableRange.location + self.showableRange.length) {
+	// If first-letter range equals showable range, disable "subtract" first-letter controls.
+	//if (self.firstLetterRange.length <= self.showableRange.length) {
+//		self.removeFirstLetterWordButton.enabled = NO;
+//	}
+	
+	// If there is nothing to add, disable "add" controls.
+	if (self.passage.text.length == NSMaxRange(self.showableRange) ) {
 		self.addClauseButton.enabled = NO;
 		self.addSentenceButton.enabled = NO;
 		self.addWordButton.enabled = NO;
 		//NSLog(@"\"add\" controls disabled");
 	}
-	if (self.passage.text.length == self.firstLetterRange.location + self.firstLetterRange.length) {
+	if (self.passage.text.length == NSMaxRange(self.firstLetterRange) ) {
+		self.addFirstLetterClauseButton.enabled = NO;
 		self.addFirstLetterWordButton.enabled = NO;
 	}
 	
-	// For "Undo -All" control. Disable if showable range has something or previous range has nothing.
-	if ((self.showableRange.length != 0) || (self.previousRange.length == 0)) {
-		self.addAllButton.enabled = NO;
-	} else {
-		self.addAllButton.enabled = YES;
+	// For "Undo '- All'" control. If the previous range has nothing, disable. If text is showing, reset the previous ranges and disable.
+	if (self.previousFirstLetterRange.length == 0) {
+		self.undoRemoveAllButton.enabled = NO;
+	} else if (self.firstLetterRange.length > 0) {
+		self.previousFirstLetterRange = NSMakeRange(0, 0);
+		self.previousShowableRange = NSMakeRange(0, 0);
+		self.undoRemoveAllButton.enabled = NO;
 	}
+}
+
+- (void)updateFirstLetterRangeAndText:(NSRange)newRange {
+	
+	// If the new range is bigger, add first letters. If smaller, remove first letters.
+	if (newRange.length > self.firstLetterRange.length) {
+		
+		// Get range of added text. Reduce that to first letters. Append to first-letter text.
+		NSUInteger location = NSMaxRange(self.firstLetterRange);
+		NSUInteger length = NSMaxRange(newRange) - location;
+		NSRange addedTextRange = NSMakeRange(location, length);
+		NSString *firstLetterTextToAdd = [self reduceStringToFirstLetters:[self.passage.text substringWithRange:addedTextRange]];
+		self.firstLetterText = [self.firstLetterText stringByAppendingString:firstLetterTextToAdd];
+		self.firstLetterRange = newRange;
+		
+	} else if (newRange.length < self.firstLetterRange.length) {
+	
+		// Get range of removed text. Reduce that to first letters. Remove that amount from the end of the first-letter text.
+		NSUInteger location = NSMaxRange(newRange);
+		NSUInteger length = NSMaxRange(self.firstLetterRange) - location;
+		NSRange removedTextRange = NSMakeRange(location, length);
+		NSString *firstLetterTextToRemove = [self reduceStringToFirstLetters:[self.passage.text substringWithRange:removedTextRange]];
+		NSUInteger startingLocationOfFirstLetterTextToRemove = self.firstLetterText.length - firstLetterTextToRemove.length; 
+		self.firstLetterText = [self.firstLetterText substringToIndex:startingLocationOfFirstLetterTextToRemove];
+		self.firstLetterRange = newRange;
+	} 		
 }
 
 - (void)updateView {
@@ -879,12 +788,14 @@ NSString *wordUnitName = @"word";
 - (void)viewDidLoad {
 
     [super viewDidLoad];
-	self.passageControls = [NSArray arrayWithObjects:self.addAllButton, self.addClauseButton, self.addFirstLetterWordButton, self.addSentenceButton, self.addWordButton, self.hideOrShowReferenceTextButton, self.hideOrShowTextButton, self.removeAllButton, self.removeClauseButton, self.removeFirstLetterWordButton, self.removeSentenceButton, self.removeWordButton, nil];
+	self.passageControls = [NSArray arrayWithObjects: self.addClauseButton, self.addFirstLetterClauseButton, self.addFirstLetterWordButton, self.addSentenceButton, self.addWordButton, self.hideOrShowReferenceTextButton, self.hideOrShowTextButton, self.removeAllButton, self.removeClauseButton, self.removeFirstLetterWordButton, self.removeSentenceButton, self.removeWordButton, self.undoRemoveAllButton, nil];
 	[self stylizePassageControls];
 	
+	self.previousShowableRange = NSMakeRange(0, 0);
+	self.previousFirstLetterRange = NSMakeRange(0, 0);
 	//testing; later showableRange should start with enough clauses to be 10 words. 3 words? 10 letters?
 	self.showableRange = NSMakeRange(0, 0);
-	self.firstLetterRange = NSMakeRange(0, 0);
+	self.firstLetterRange = self.showableRange;
 	//[self addClause];
 	
 	self.showReferenceText = YES;
@@ -899,8 +810,8 @@ NSString *wordUnitName = @"word";
 	
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-	self.addAllButton = nil;
 	self.addClauseButton = nil;
+	self.addFirstLetterClauseButton = nil;
 	self.addFirstLetterWordButton = nil;
 	self.addSentenceButton = nil;
 	self.addWordButton = nil;
@@ -911,6 +822,7 @@ NSString *wordUnitName = @"word";
 	self.removeClauseButton = nil;
 	self.removeSentenceButton = nil;
 	self.removeWordButton = nil;
+	self.undoRemoveAllButton = nil;
 	self.workingTextView = nil;
 	
 	// Release any data that is recreated in viewDidLoad.

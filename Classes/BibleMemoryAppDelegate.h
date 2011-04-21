@@ -1,6 +1,6 @@
 /*
  Program: Bible Memory
- Version: 0.07
+ Version: 0.08
  File: Bible_memory_ipadAppDelegate.h
  Authors: Geoffrey Hom (GeoffHom@gmail.com)
  Abstract: The application delegate. 

@@ -1,7 +1,7 @@
 /*
  File: LearnPassageViewController.h
- Authors: Geoffrey Hom (GeoffHom@gmail.com)
- Abstract: Controls the view for learning/memorizing a passage. Regular controls dominate first-letter controls.
+ Authors: Geoff Hom (GeoffHom@gmail.com)
+ Abstract: Controls the view for learning/memorizing a passage.
  */
 
 #import <UIKit/UIKit.h>
@@ -11,19 +11,17 @@
 @interface LearnPassageViewController : UIViewController {
 }
 
-// Control for showing everything.
-//rename this to "undoRemoveAllButton"?
-@property (nonatomic, retain) IBOutlet UIButton *addAllButton;
-
 // Control for showing more clauses.
-// do I end up using this button enough?
 @property (nonatomic, retain) IBOutlet UIButton *addClauseButton;
 
-// Control for showing more first letters, by word.
-@property (nonatomic, retain) IBOutlet UIButton *addFirstLetterWordButton;
+// Control for showing more first letters, by clause.
+@property (nonatomic, retain) IBOutlet UIButton *addFirstLetterClauseButton;
 
 // Control for showing more first letters, by sentence.
 @property (nonatomic, retain) IBOutlet UIButton *addFirstLetterSentenceButton;
+
+// Control for showing more first letters, by word.
+@property (nonatomic, retain) IBOutlet UIButton *addFirstLetterWordButton;
 
 // Control for showing more sentences.
 @property (nonatomic, retain) IBOutlet UIButton *addSentenceButton;
@@ -63,14 +61,14 @@
 // Control for showing less words.
 @property (nonatomic, retain) IBOutlet UIButton *removeWordButton;
 
+// Control for undoing the "- All" button.
+@property (nonatomic, retain) IBOutlet UIButton *undoRemoveAllButton;
+
 // Control for undoing the "-All" first-letters button.
 @property (nonatomic, retain) IBOutlet UIButton *undoRemoveAllFirstLettersButton;
 
 // For working with the passage text.
 @property (nonatomic, retain) IBOutlet UITextView *workingTextView;
-
-// Add all text to the showable text. Actually, for now this should just undo "removeAllText". Testing.
-- (IBAction)addAllText:(id)sender;
 
 // If the reference text is showing, hide it. If hidden, show it.
 - (IBAction)hideOrShowReferenceText:(id)sender;
@@ -85,7 +83,7 @@
 // Remove all first letters from the working text.
 - (IBAction)removeAllFirstLetters:(id)sender;
 
-// Remove all text from the showable text.
+// Remove/reset all text from the showable text and first-letter text.
 - (IBAction)removeAllText:(id)sender;
 
 // Call a method based on the sender's identity. Then, after an initial delay, repeat the method indefinitely. (Example: holding down the delete key.)
@@ -96,5 +94,8 @@
 
 // Undo "removeAllFirstLetters:."
 - (IBAction)undoRemoveAllFirstLetters:(id)sender;
+
+// Undo the most recent "remove all text."
+- (IBAction)undoRemoveAllText:(id)sender;
 
 @end
