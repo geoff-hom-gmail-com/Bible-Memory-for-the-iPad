@@ -6,6 +6,7 @@
 #import "DefaultData.h"
 #import "LearnPassageViewController.h"
 #import "Passage.h"
+#import "RecallPassageViewController.h"
 #import "RootViewController.h"
 
 // Private category for private methods.
@@ -21,7 +22,7 @@
 
 @implementation RootViewController
 
-@synthesize logTextView, managedObjectContext, passageTitlesTextView;
+@synthesize logTextView, makeDefaultDataButton, managedObjectContext, passageTitlesTextView;
 @synthesize passageArray;
 
 - (void)dealloc {
@@ -97,7 +98,27 @@
 */
 
 - (IBAction)makeDefaultDataStore:(id)sender {
+
+	NSLog(@"RVC: makeDefaultDataStore called");
 	[DefaultData makeStore];
+}
+
+
+- (IBAction)recallPassage:(id)sender {
+	
+	// Get passage for Philippians.
+	Passage *desiredPassage;
+	for (Passage *aPassage in self.passageArray) {
+		if ([aPassage.title isEqualToString:@"Philippians (The Message)"]) {
+			desiredPassage = aPassage;
+			break;
+		}
+	}
+	
+	// Make controller.
+	UIViewController *aRecallPassageViewController = [[RecallPassageViewController alloc] initWithPassage:desiredPassage];
+	[self.navigationController pushViewController:aRecallPassageViewController animated:YES];
+	[aRecallPassageViewController release];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -120,6 +141,9 @@
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+	
+	// For development. Disable button for making default data. Enable if needed for dev.
+	self.makeDefaultDataButton.enabled = NO;
 	
 	// Get passages.
 	self.passageArray = [self fetchPassages];

@@ -15,6 +15,11 @@
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
+		93104992136B5F6C000798CA /* RecallPassageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93104991136B5F6C000798CA /* RecallPassageViewController.m */; };
+		931049CD136B64AC000798CA /* RecallPassageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931049CC136B64AC000798CA /* RecallPassageViewController.xib */; };
+		93104A46136B90A1000798CA /* VoiceRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 93104A45136B90A1000798CA /* VoiceRecorder.m */; };
+		93104C14136B9F56000798CA /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93104C13136B9F56000798CA /* AudioToolbox.framework */; };
+		93104D81136C85BC000798CA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93104D80136C85BC000798CA /* AVFoundation.framework */; };
 		9343100F129B2D6F00ADC66C /* ShowTextViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */; };
 		93431015129B2DBA00ADC66C /* ShowTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431013129B2DBA00ADC66C /* ShowTextViewController.m */; };
 		93431098129DC02D00ADC66C /* SegmentedControlController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93431097129DC02D00ADC66C /* SegmentedControlController.m */; };
@@ -48,6 +53,13 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* bible_memory_ipad_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bible_memory_ipad_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* bible_memory_ipad-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "bible_memory_ipad-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		93104990136B5F6C000798CA /* RecallPassageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecallPassageViewController.h; sourceTree = "<group>"; };
+		93104991136B5F6C000798CA /* RecallPassageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecallPassageViewController.m; sourceTree = "<group>"; };
+		931049CC136B64AC000798CA /* RecallPassageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = RecallPassageViewController.xib; path = Classes/RecallPassageViewController.xib; sourceTree = "<group>"; };
+		93104A44136B90A1000798CA /* VoiceRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceRecorder.h; sourceTree = "<group>"; };
+		93104A45136B90A1000798CA /* VoiceRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceRecorder.m; sourceTree = "<group>"; };
+		93104C13136B9F56000798CA /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		93104D80136C85BC000798CA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = ShowTextViewController.xib; path = Classes/ShowTextViewController.xib; sourceTree = "<group>"; };
 		93431012129B2DBA00ADC66C /* ShowTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowTextViewController.h; path = ../ShowTextViewController.h; sourceTree = "<group>"; };
 		93431013129B2DBA00ADC66C /* ShowTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowTextViewController.m; path = ../ShowTextViewController.m; sourceTree = "<group>"; };
@@ -89,6 +101,8 @@
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */,
+				93104C14136B9F56000798CA /* AudioToolbox.framework in Frameworks */,
+				93104D81136C85BC000798CA /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,28 +112,32 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				93A2DA851336CCCB0069A725 /* MemoryUnit.h */,
-				936C0A1C12A855EB001622DB /* MemoryUnit.m */,
-				93B517E012755F3C0028EECE /* Passage.h */,
-				93B517E112755F3C0028EECE /* Passage.m */,
-				9383CA81126E70CA00D52DE1 /* MainViewController.h */,
-				9383CA82126E70CA00D52DE1 /* MainViewController.m */,
 				1D3623240D0F684500981E51 /* BibleMemoryAppDelegate.h */,
 				1D3623250D0F684500981E51 /* BibleMemoryAppDelegate.m */,
+				93B5189C12762CC10028EECE /* DefaultData.h */,
+				93B5189D12762CC10028EECE /* DefaultData.m */,
 				936B342E1344589200E40FF4 /* LearnPassageViewController.h */,
 				936B342F1344589200E40FF4 /* LearnPassageViewController.m */,
 				93431101129DE5FD00ADC66C /* LearnTextViewController.h */,
 				93431102129DE5FD00ADC66C /* LearnTextViewController.m */,
-				93431012129B2DBA00ADC66C /* ShowTextViewController.h */,
-				93431013129B2DBA00ADC66C /* ShowTextViewController.m */,
+				9383CA81126E70CA00D52DE1 /* MainViewController.h */,
+				9383CA82126E70CA00D52DE1 /* MainViewController.m */,
+				93A2DA851336CCCB0069A725 /* MemoryUnit.h */,
+				936C0A1C12A855EB001622DB /* MemoryUnit.m */,
+				93B517E012755F3C0028EECE /* Passage.h */,
+				93B517E112755F3C0028EECE /* Passage.m */,
 				93B517681272B92A0028EECE /* PassagesTableViewController.h */,
 				93B517691272B92A0028EECE /* PassagesTableViewController.m */,
-				93B5189C12762CC10028EECE /* DefaultData.h */,
-				93B5189D12762CC10028EECE /* DefaultData.m */,
-				93431096129DC02D00ADC66C /* SegmentedControlController.h */,
-				93431097129DC02D00ADC66C /* SegmentedControlController.m */,
+				93104990136B5F6C000798CA /* RecallPassageViewController.h */,
+				93104991136B5F6C000798CA /* RecallPassageViewController.m */,
 				936B33AE134449BB00E40FF4 /* RootViewController.h */,
 				936B33AF134449BB00E40FF4 /* RootViewController.m */,
+				93431096129DC02D00ADC66C /* SegmentedControlController.h */,
+				93431097129DC02D00ADC66C /* SegmentedControlController.m */,
+				93431012129B2DBA00ADC66C /* ShowTextViewController.h */,
+				93431013129B2DBA00ADC66C /* ShowTextViewController.m */,
+				93104A44136B90A1000798CA /* VoiceRecorder.h */,
+				93104A45136B90A1000798CA /* VoiceRecorder.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -158,13 +176,14 @@
 			children = (
 				936585D81349B5F6000D3679 /* defaultStore.sqlite */,
 				936B34301344589200E40FF4 /* LearnPassageViewController.xib */,
-				936B33B0134449BB00E40FF4 /* RootViewController.xib */,
-				9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */,
-				93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */,
 				93431103129DE5FD00ADC66C /* LearnTextViewController.xib */,
 				9383CA83126E70CA00D52DE1 /* MainViewController.xib */,
-				28193054112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
+				93B5176A1272B92A0028EECE /* PassagesTableViewController.xib */,
+				931049CC136B64AC000798CA /* RecallPassageViewController.xib */,
+				936B33B0134449BB00E40FF4 /* RootViewController.xib */,
+				9343100E129B2D6F00ADC66C /* ShowTextViewController.xib */,
+				28193054112F811F00ECF9B4 /* bible_memory_ipad.xcdatamodeld */,
 				8D1107310486CEB800E47090 /* bible_memory_ipad-Info.plist */,
 				937557DE128B77F900B93E77 /* default-data.plist */,
 			);
@@ -178,6 +197,8 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				28D801B30F44B63D00FB423F /* CoreData.framework */,
+				93104C13136B9F56000798CA /* AudioToolbox.framework */,
+				93104D80136C85BC000798CA /* AVFoundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -240,6 +261,7 @@
 				936B33B2134449BB00E40FF4 /* RootViewController.xib in Resources */,
 				936B34321344589200E40FF4 /* LearnPassageViewController.xib in Resources */,
 				936585D91349B5F6000D3679 /* defaultStore.sqlite in Resources */,
+				931049CD136B64AC000798CA /* RecallPassageViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +285,8 @@
 				936C0A1D12A855EB001622DB /* MemoryUnit.m in Sources */,
 				936B33B1134449BB00E40FF4 /* RootViewController.m in Sources */,
 				936B34311344589200E40FF4 /* LearnPassageViewController.m in Sources */,
+				93104992136B5F6C000798CA /* RecallPassageViewController.m in Sources */,
+				93104A46136B90A1000798CA /* VoiceRecorder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

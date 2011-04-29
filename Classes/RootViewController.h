@@ -12,6 +12,9 @@
 // Temp. For logging text to the screen.
 @property (nonatomic, retain) IBOutlet UITextView *logTextView;
 
+// For development. For making the default data.
+@property (nonatomic, retain) IBOutlet UIButton *makeDefaultDataButton;
+
 // For accessing Core Data.
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
@@ -23,5 +26,8 @@
 
 // For dev. Make the Core Data store for default data from a property list. The resulting store can be used to more-quickly initialize the persistent store on the user's device.
 - (IBAction)makeDefaultDataStore:(id)sender;
+
+// Go to tool for recalling a passage.
+- (IBAction)recallPassage:(id)sender;
 
 @end
