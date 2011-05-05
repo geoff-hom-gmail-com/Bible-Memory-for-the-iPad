@@ -8,6 +8,9 @@
 #import "RecallPassageViewController.h"
 #import "VoiceRecorder.h"
 
+// Filename to store the user's voice recording.
+NSString *filenameForRecording = @"recording1.caf";
+
 // Private category for private methods.
 @interface RecallPassageViewController ()
 
@@ -29,6 +32,12 @@
 // Set the audio session's category to playback. If other music is playing, allow that. Else, use the "solo ambient" category to enable hardware decoding.
 - (void)setPlaybackCategory;
 
+// Change the styles of the buttons/controls.
+- (void)stylizeControls;
+
+// Enable/disable passage controls based on context. Change control labels based on context.
+- (void)updateControlAppearance;
+
 // Update what's seen. For example, in response to the showable text changing.
 - (void)updateView;
 
@@ -36,25 +45,30 @@
 
 @implementation RecallPassageViewController
 
-@synthesize referenceTextView, startOrStopPlaybackButton, startOrStopPlayback2Button, startOrStopRecordingButton, startOrStopRecording2Button;
+@synthesize referenceTextView, startOrPausePlaybackButton, startOrStopRecordingButton;
 @synthesize audioPlayer, audioSession, documentDirectoryURL, passage, voiceRecorder;
 
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)audioPlayer successfully:(BOOL)completed {
 	
 	if (completed == YES) { 
-		[self.startOrStopPlaybackButton setTitle:@"Start" forState:UIControlStateNormal];
-		[self.startOrStopPlayback2Button setTitle:@"Start" forState:UIControlStateNormal];
-		NSLog(@"Playback finished on own.");
+		[self.startOrPausePlaybackButton setTitle:@"Start" forState:UIControlStateNormal];
+		self.startOrStopRecordingButton.enabled = YES;
+		//NSLog(@"Playback finished on own.");
 	}
 }
 
 - (void)dealloc {
 	
-	NSArray *anArray = [NSArray arrayWithObjects: referenceTextView, startOrStopPlaybackButton, startOrStopPlayback2Button, startOrStopRecordingButton, startOrStopRecording2Button, nil];
+	// If recording, stop.
+	if (self.voiceRecorder.isRecording) {
+		[self.voiceRecorder stopRecordingWithAVAudioRecorder];
+	}
+	
+	NSArray *anArray = [NSArray arrayWithObjects: audioPlayer, audioSession, documentDirectoryURL, passage, voiceRecorder, nil];
 	for (NSObject *anObject in anArray) {
 		[anObject release];
 	}
-	anArray = [NSArray arrayWithObjects: audioPlayer, audioSession, documentDirectoryURL, passage, voiceRecorder, nil];
+	anArray = [NSArray arrayWithObjects: referenceTextView, startOrPausePlaybackButton, startOrStopRecordingButton, nil];
 	for (NSObject *anObject in anArray) {
 		[anObject release];
 	}
@@ -62,11 +76,12 @@
 }
 
 - (void)didReceiveMemoryWarning {
-
-    // Releases the view if it doesn't have a superview.
+	
+	// Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc. that aren't in use.
+	NSLog(@"RPVC memory warning called.");
 }
 
 - (id)initWithPassage:(Passage *)thePassage {
@@ -84,13 +99,8 @@
 		// Find Documents directory.
 		NSFileManager *aFileManager = [[NSFileManager alloc] init];
 		NSArray *urlArray = [aFileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask];
-		[aFileManager release];
 		self.documentDirectoryURL = (NSURL *)[urlArray objectAtIndex:0];
-		
-		// do I need/want this here? wait until I have only one record button.
-		//VoiceRecorder *aVoiceRecorder = [[VoiceRecorder alloc] init];
-//		self.voiceRecorder = aVoiceRecorder;
-//		[aVoiceRecorder release];
+		[aFileManager release];
 		
 		//self.firstLetterText = @"";
     }
@@ -108,10 +118,10 @@
 		UInt32 one = 1;
 		AudioSessionSetProperty(kAudioSessionProperty_OtherMixableAudioShouldDuck, sizeof(one), 
 			&one);
-		NSLog(@"RPVC: Category set to ambient, with ducking.");
+		//NSLog(@"RPVC: Category set to ambient, with ducking.");
 	} else { 
 		[self.audioSession setCategory:AVAudioSessionCategorySoloAmbient error: nil];
-		NSLog(@"RPVC: Category set to solo ambient.");
+		//NSLog(@"RPVC: Category set to solo ambient.");
 	}
 }
 
@@ -121,34 +131,25 @@
     return YES;
 }
 
-- (IBAction)startOrStopPlayback:(id)sender {
+- (IBAction)startOrPausePlayback:(id)sender {
 
 	UIButton *button = (UIButton *)sender;
 	if (!self.audioPlayer.playing) {
-		[button setTitle:@"Stop" forState:UIControlStateNormal];
+		[button setTitle:@"Pause" forState:UIControlStateNormal];
+		self.startOrStopRecordingButton.enabled = NO;
 		
-		// Play different filenames depending on which button was pressed.
-		NSString *filename;
-		if (button == self.startOrStopPlaybackButton) {
-			filename = @"testing.caf";
-		} else {
-			filename = @"testing2.caf";			
-		}
-		NSURL *url = [self.documentDirectoryURL URLByAppendingPathComponent:filename];
+		NSURL *url = [self.documentDirectoryURL URLByAppendingPathComponent:filenameForRecording];
 		AVAudioPlayer *anAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:NULL];
 		anAudioPlayer.delegate = self;
 		self.audioPlayer = anAudioPlayer;
 		[anAudioPlayer release];
 		
-		NSLog(@"RPVC sOSP: About to call prepareToPlay");
 		[self.audioPlayer prepareToPlay];
-		NSLog(@"RPVC sOSP: Will play from: %@", url);
 		[self.audioPlayer play];
 	} else {
 		[button setTitle:@"Start" forState:UIControlStateNormal];
-		//[self.audioPlayer pause];
-		[self.audioPlayer stop];
-		// still need to reset currentTime
+		[self.audioPlayer pause];
+		self.startOrStopRecordingButton.enabled = YES;
 	}
 }
 
@@ -158,59 +159,77 @@
 	if (!self.voiceRecorder.isRecording) {
 		[button setTitle:@"Stop" forState:UIControlStateNormal];
 		[self.audioSession setCategory:AVAudioSessionCategoryRecord error:nil];
+		self.startOrPausePlaybackButton.enabled = NO;
 		
 		VoiceRecorder *aVoiceRecorder = [[VoiceRecorder alloc] init];
 		self.voiceRecorder = aVoiceRecorder;
 		[aVoiceRecorder release];
 		
-		// Record to different filenames depending on which button was pressed.
-		// Record with different setups depending on which button was pressed.
-		NSString *filename;
 		NSURL *url;
-		if (button == self.startOrStopRecordingButton) {
-			filename = @"testing.caf";
-			url = [self.documentDirectoryURL URLByAppendingPathComponent:filename];
-			[self.voiceRecorder startRecordingWithAVAudioRecorder:url]; 
-		} else {
-			filename = @"testing2.caf";
-			url = [self.documentDirectoryURL URLByAppendingPathComponent:filename];
-			//[self.voiceRecorder startRecordingWithVoiceProcessingAudioUnit:url];
-		}
+		url = [self.documentDirectoryURL URLByAppendingPathComponent:filenameForRecording];
+		[self.voiceRecorder startRecordingWithAVAudioRecorder:url]; 
 	} else {
 		[button setTitle:@"Start" forState:UIControlStateNormal];
-		if (button == self.startOrStopRecordingButton) {
-			[self.voiceRecorder stopRecordingWithAVAudioRecorder]; 
-		} else {
-			//[self.voiceRecorder stopRecordingWithVoiceProcessingAudioUnit];
-		}
-		//[self.voiceRecorder stopRecording];
+		[self.voiceRecorder stopRecordingWithAVAudioRecorder]; 
 		self.voiceRecorder = nil;
 		[self setPlaybackCategory];
-		//[self.audioSession setCategory:AVAudioSessionCategoryAmbient error:nil];
+		self.startOrPausePlaybackButton.enabled = YES;
 	}
 }
 
+- (void)stylizeControls {
+
+	NSArray *controlsArray = [NSArray arrayWithObjects:self.startOrPausePlaybackButton, self.startOrStopRecordingButton, nil];
+	
+	UIColor *disabledTitleColor = [UIColor lightGrayColor];
+	
+	for (UIButton *aButton in controlsArray) {
+		[aButton setTitleColor:disabledTitleColor forState:UIControlStateDisabled];
+	}
+}
+
+- (void)updateControlAppearance {
+}
+
 - (void)updateView {
+	[self updateControlAppearance];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 
     [super viewDidLoad];
+	
+	[self stylizeControls];
+	
+	// If file for recording exists, enable playback controls. Else, disable.
+	NSURL *url = [self.documentDirectoryURL URLByAppendingPathComponent:filenameForRecording];
+	NSFileManager *aFileManager = [[NSFileManager alloc] init];
+	BOOL fileForRecordingExists = [aFileManager fileExistsAtPath:[url path] ];
+	[aFileManager release];
+	NSArray *playbackControlsArray = [NSArray arrayWithObjects:self.startOrPausePlaybackButton, nil];
+	if (fileForRecordingExists) {
+		for (UIButton *aButton in playbackControlsArray) {
+			aButton.enabled = YES;
+		}
+	} else {
+		for (UIButton *aButton in playbackControlsArray) {
+			aButton.enabled = NO;
+		}
+	}
+	
 	[self updateView];
 }
 
 - (void)viewDidUnload {
-    
+    NSLog(@"RPVC viewDidUnload called.");
 	[super viewDidUnload];
 	
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 	self.referenceTextView = nil;
-	self.startOrStopPlaybackButton = nil;
-	self.startOrStopPlayback2Button = nil;
+	self.startOrPausePlaybackButton = nil;
 	self.startOrStopRecordingButton = nil;
-	self.startOrStopRecording2Button = nil;
 	
 	// Release any data that is recreated in viewDidLoad.
 }

@@ -38,17 +38,11 @@
 // For displaying the passage text.
 @property (nonatomic, retain) IBOutlet UITextView *referenceTextView;
 
-// Button for starting/stopping audio recording.
-@property (nonatomic, retain) IBOutlet UIButton *startOrStopPlaybackButton;
-
-// Button for starting/stopping audio recording.
-@property (nonatomic, retain) IBOutlet UIButton *startOrStopPlayback2Button;
+// Button for starting/pausing audio playback.
+@property (nonatomic, retain) IBOutlet UIButton *startOrPausePlaybackButton;
 
 // Button for starting/stopping audio recording.
 @property (nonatomic, retain) IBOutlet UIButton *startOrStopRecordingButton;
-
-// Button for starting/stopping audio recording.
-@property (nonatomic, retain) IBOutlet UIButton *startOrStopRecording2Button;
 
 /*
 // Control for showing nothing.
@@ -99,8 +93,8 @@
 - (IBAction)undoRemoveAllText:(id)sender;
 */
 
-// If not playing, start. Else, stop playback.
-- (IBAction)startOrStopPlayback:(id)sender;
+// If not playing, start. Else, pause playback.
+- (IBAction)startOrPausePlayback:(id)sender;
 
 // If not recording, set category to record and start recording. Else, stop recording and set category to play.
 - (IBAction)startOrStopRecording:(id)sender;
